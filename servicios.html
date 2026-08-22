@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Servicios | CEPASI — Asesoría, Capacitación, Mantenimiento y Equipos</title>
+<meta name="description" content="Conozca los servicios de CEPASI: asesoría y consultoría SST, capacitaciones, mantenimiento de extintores y venta de equipos de emergencia y primeros auxilios.">
+<link rel="icon" type="image/png" href="assets/img/logo-cepasi.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink: '#1A1A1A',
+          brandred: { DEFAULT: '#E63C24', dark: '#C7301A' },
+          brandorange: '#F79433',
+          lime: '#CBE24B',
+          navy: { DEFAULT: '#1F3B57', dark: '#152A3D', light: '#2C5075' },
+          beige: '#F5F3EF'
+        },
+        fontFamily: {
+          heading: ['Barlow Condensed', 'sans-serif'],
+          sans: ['Inter', 'sans-serif']
+        }
+      }
+    }
+  }
+</script>
+<link rel="stylesheet" href="assets/css/theme.css">
+<link rel="stylesheet" href="assets/css/typography.css">
+<link rel="stylesheet" href="assets/css/responsive.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+</head>
+<body class="bg-white font-sans text-slate-700">
+  <div class="hidden sm:block bg-ink text-white text-xs">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8 flex items-center justify-between py-2">
+      <div class="flex items-center gap-5">
+        <a href="contacto.html#mapa" class="flex items-center gap-1.5 hover:text-brandorange transition">
+          <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
+          <span>C/ 16, Esquina 19, Villa Aura, Santo Domingo Oeste, R.D.</span>
+        </a>
+        <a href="tel:+18092845807" class="hidden md:flex items-center gap-1.5 hover:text-brandorange transition">
+          <i data-lucide="phone" class="w-3.5 h-3.5"></i>
+          <span>809-284-5807</span>
+        </a>
+        <a href="mailto:cuerpodeevacuacion01@gmail.com" class="hidden lg:flex items-center gap-1.5 hover:text-brandorange transition">
+          <i data-lucide="mail" class="w-3.5 h-3.5"></i>
+          <span>cuerpodeevacuacion01@gmail.com</span>
+        </a>
+      </div>
+      <div class="flex items-center gap-3">
+        <a href="#" aria-label="Facebook de CEPASI" class="hover:text-brandorange transition"><svg viewBox="0 0 24 24" fill="currentColor" class="w-3.5 h-3.5"><path d="M22 12.06C22 6.51 17.52 2 12 2S2 6.51 2 12.06c0 5 3.66 9.15 8.44 9.94v-7.03H7.9v-2.91h2.54V9.85c0-2.51 1.49-3.9 3.77-3.9 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.89h2.78l-.44 2.91h-2.34V22c4.78-.79 8.44-4.94 8.44-9.94z"/></svg></a>
+        <a href="https://www.instagram.com/seguridad_y_salud_ocupacional1/" target="_blank" rel="noopener" aria-label="Instagram de CEPASI" class="hover:text-brandorange transition"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+      </div>
+    </div>
+  </div>
+  <header id="site-header" class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-100">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        <a href="index.html" class="flex items-center gap-3 shrink-0">
+          <img src="assets/img/logo-cepasi.png" alt="Logo CEPASI" class="w-12 h-12">
+          <span class="font-heading font-extrabold text-xl md:text-2xl text-ink leading-none">CEPASI</span>
+        </a>
+        <nav class="hidden lg:flex items-center gap-8 flex-1 justify-center">
+          <a href="index.html" class="font-semibold text-sm text-ink hover:text-brandred transition">Inicio</a>
+          <a href="nosotros.html" class="font-semibold text-sm text-ink hover:text-brandred transition">Nosotros</a>
+          <a href="servicios.html" class="font-semibold text-sm nav-active transition">Servicios</a>
+          <a href="proyectos.html" class="font-semibold text-sm text-ink hover:text-brandred transition">Proyectos</a>
+          <a href="blog.html" class="font-semibold text-sm text-ink hover:text-brandred transition">Blog</a>
+          <a href="contacto.html" class="font-semibold text-sm text-ink hover:text-brandred transition">Contacto</a>
+        </nav>
+        <div class="hidden lg:flex items-center gap-3 shrink-0">
+          <a href="https://wa.me/18092845807" target="_blank" rel="noopener" class="clip-br bg-gradient-brand hover:brightness-105 text-white font-bold text-sm uppercase tracking-wide px-6 py-3 transition shadow-sm">
+            Solicitar Asesoría
+          </a>
+        </div>
+        <button id="menu-toggle" aria-label="Abrir menú" class="lg:hidden p-2 text-ink">
+          <i data-lucide="menu" id="icon-open" class="w-7 h-7"></i>
+          <i data-lucide="x" id="icon-close" class="w-7 h-7 hidden"></i>
+        </button>
+      </div>
+      <div id="mobile-menu" class="lg:hidden">
+      <a href="index.html" class="block py-3 px-1 border-b border-slate-100 font-semibold text-ink hover:text-brandred">Inicio</a>
+      <a href="nosotros.html" class="block py-3 px-1 border-b border-slate-100 font-semibold text-ink hover:text-brandred">Nosotros</a>
+      <a href="servicios.html" class="block py-3 px-1 border-b border-slate-100 font-semibold nav-active">Servicios</a>
+      <a href="proyectos.html" class="block py-3 px-1 border-b border-slate-100 font-semibold text-ink hover:text-brandred">Proyectos</a>
+      <a href="blog.html" class="block py-3 px-1 border-b border-slate-100 font-semibold text-ink hover:text-brandred">Blog</a>
+      <a href="contacto.html" class="block py-3 px-1 border-b border-slate-100 font-semibold text-ink hover:text-brandred">Contacto</a>
+        <a href="https://wa.me/18092845807" target="_blank" rel="noopener" class="mt-3 clip-br bg-gradient-brand text-white font-bold text-sm uppercase tracking-wide px-5 py-3 flex items-center justify-center gap-2">
+          <i data-lucide="message-circle" class="w-4 h-4"></i> Solicitar Asesoría
+        </a>
+      </div>
+    </div>
+  </header>
+  <section class="relative overflow-hidden">
+    <div class="absolute inset-0">
+      <img src="assets/img/hero-mantenimiento.jpg" alt="" class="w-full h-full object-cover">
+      <div class="absolute inset-0 bg-ink/85"></div>
+    </div>
+    <div class="relative max-w-7xl mx-auto px-4 lg:px-8 py-20 md:py-28 text-center">
+      <span class="eyebrow eyebrow-dot text-brandorange font-semibold text-xs uppercase tracking-widest">Servicios</span>
+      <h1 class="font-heading font-extrabold text-4xl md:text-6xl text-white mt-4 mb-5 max-w-3xl mx-auto leading-[1.05]">Soluciones completas en seguridad industrial, de la asesoría a la ejecución</h1>
+      <p class="text-slate-200 max-w-2xl mx-auto text-base md:text-lg leading-relaxed">Agrupamos nuestros servicios en cuatro áreas para que su empresa encuentre, en un mismo lugar, todo lo que necesita para prevenir, cumplir y responder ante una emergencia.</p>
+    </div>
+  </section>
+  <div class="bg-white border-b border-slate-100 sticky top-20 z-40">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8 py-3 flex flex-wrap gap-x-6 gap-y-2 text-sm font-semibold justify-center">
+      <a href="#asesoria" class="text-ink hover:text-brandred transition">Asesoría y Consultoría</a>
+      <a href="#capacitaciones" class="text-ink hover:text-brandred transition">Capacitaciones</a>
+      <a href="#mantenimiento" class="text-ink hover:text-brandred transition">Mantenimiento y Taller</a>
+      <a href="#equipos" class="text-ink hover:text-brandred transition">Equipos y Primeros Auxilios</a>
+    </div>
+  </div>
+  <section id="asesoria" class="py-16 md:py-24 ">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8">
+      <div class="grid md:grid-cols-12 gap-10 items-start">
+      <div class="md:col-span-12 md:order-1">
+        <div class="flex items-center gap-4 mb-4">
+          <span class="w-10 h-10 rounded-full bg-gradient-brand text-white font-heading font-bold text-base flex items-center justify-center shrink-0">1</span>
+          <h2 class="font-heading font-bold text-3xl md:text-4xl text-ink">Asesoría y Consultoría Especializada</h2>
+        </div>
+        <p class="text-slate-600 leading-relaxed mb-8 max-w-2xl">Antes de capacitar o instalar un solo equipo, hay que entender el riesgo. Nuestro equipo de consultoría evalúa su empresa a fondo y traduce esa evaluación en documentos y planes claros, aplicables y alineados con la ley dominicana.</p>
+        <div class="grid sm:grid-cols-2 gap-4">
+        <div class="bg-white rounded-sm border border-slate-100 p-6 card-lift flex gap-4">
+          <div class="icon-badge-soft w-11 h-11"><i data-lucide="shield-check" class="w-5 h-5"></i></div>
+          <div>
+            <h4 class="font-heading font-semibold text-ink mb-1.5 leading-snug tracking-normal normal-case">Asesoría y consultoría integral en Seguridad Industrial y Salud Ocupacional</h4>
+            <p class="text-sm text-slate-600 leading-relaxed">Acompañamiento experto para que su empresa identifique sus riesgos, priorice sus inversiones en seguridad y cumpla con sus obligaciones en materia de SST.</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-sm border border-slate-100 p-6 card-lift flex gap-4">
+          <div class="icon-badge-soft w-11 h-11"><i data-lucide="file-text" class="w-5 h-5"></i></div>
+          <div>
+            <h4 class="font-heading font-semibold text-ink mb-1.5 leading-snug tracking-normal normal-case">Diseño del Manual de Seguridad y Salud en el Trabajo (SST)</h4>
+            <p class="text-sm text-slate-600 leading-relaxed">Elaboramos el manual oficial de su empresa, adaptado a su actividad, sus instalaciones y los riesgos específicos de su operación, en conformidad con el Reglamento 522-06.</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-sm border border-slate-100 p-6 card-lift flex gap-4">
+          <div class="icon-badge-soft w-11 h-11"><i data-lucide="search" class="w-5 h-5"></i></div>
+          <div>
+            <h4 class="font-heading font-semibold text-ink mb-1.5 leading-snug tracking-normal normal-case">Elaboración de análisis de riesgo corporativos e industriales</h4>
+            <p class="text-sm text-slate-600 leading-relaxed">Identificamos los peligros presentes en sus instalaciones —incendios, eléctricos, estructurales, operativos— y entregamos un informe técnico con recomendaciones concretas de mitigación.</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-sm border border-slate-100 p-6 card-lift flex gap-4">
+          <div class="icon-badge-soft w-11 h-11"><i data-lucide="map" class="w-5 h-5"></i></div>
+          <div>
+            <h4 class="font-heading font-semibold text-ink mb-1.5 leading-snug tracking-normal normal-case">Elaboración y estructuración de planes de emergencia para empresas y viviendas</h4>
+            <p class="text-sm text-slate-600 leading-relaxed">Diseñamos rutas de evacuación, puntos de encuentro y protocolos de actuación claros, tanto para instalaciones corporativas como para el hogar.</p>
+          </div>
+        </div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </section>
+  <section id="capacitaciones" class="py-16 md:py-24 bg-beige">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8">
+      <div class="grid md:grid-cols-12 gap-10 items-start">
+      <div class="md:col-span-5 md:order-1">
+        <div class="flex items-center gap-4 mb-4">
+          <span class="w-10 h-10 rounded-full bg-gradient-brand text-white font-heading font-bold text-base flex items-center justify-center shrink-0">2</span>
+          <h2 class="font-heading font-bold text-3xl md:text-4xl text-ink">Capacitaciones y Formación Técnica</h2>
+        </div>
+        <p class="text-slate-600 leading-relaxed mb-8 max-w-2xl">Un plan de emergencia solo funciona si las personas saben ejecutarlo. Formamos a su personal —y, si lo desea, a su familia— para que sepan actuar con calma y eficacia ante cualquier situación de riesgo.</p>
+        <div class="grid sm:grid-cols-2 gap-4">
+        <div class="bg-white rounded-sm border border-slate-100 p-6 card-lift flex gap-4">
+          <div class="icon-badge-soft w-11 h-11"><i data-lucide="activity" class="w-5 h-5"></i></div>
+          <div>
+            <h4 class="font-heading font-semibold text-ink mb-1.5 leading-snug tracking-normal normal-case">Primeros auxilios básicos y avanzados</h4>
+            <p class="text-sm text-slate-600 leading-relaxed">Formación práctica para reconocer y atender emergencias médicas mientras llega ayuda especializada.</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-sm border border-slate-100 p-6 card-lift flex gap-4">
+          <div class="icon-badge-soft w-11 h-11"><i data-lucide="siren" class="w-5 h-5"></i></div>
+          <div>
+            <h4 class="font-heading font-semibold text-ink mb-1.5 leading-snug tracking-normal normal-case">Capacitación integral para el manejo de emergencias en las empresas</h4>
+            <p class="text-sm text-slate-600 leading-relaxed">Preparamos a su personal para responder de forma coordinada ante incendios, evacuaciones y otras situaciones críticas.</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-sm border border-slate-100 p-6 card-lift flex gap-4">
+          <div class="icon-badge-soft w-11 h-11"><i data-lucide="house" class="w-5 h-5"></i></div>
+          <div>
+            <h4 class="font-heading font-semibold text-ink mb-1.5 leading-snug tracking-normal normal-case">Organización y prevención de emergencias en empresas y hogares</h4>
+            <p class="text-sm text-slate-600 leading-relaxed">Estructuramos protocolos de prevención adaptados tanto al entorno corporativo como al residencial.</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-sm border border-slate-100 p-6 card-lift flex gap-4">
+          <div class="icon-badge-soft w-11 h-11"><i data-lucide="door-open" class="w-5 h-5"></i></div>
+          <div>
+            <h4 class="font-heading font-semibold text-ink mb-1.5 leading-snug tracking-normal normal-case">Ejecución de simulacros de evacuación</h4>
+            <p class="text-sm text-slate-600 leading-relaxed">Ponemos a prueba los planes de emergencia en condiciones reales, para corregir a tiempo lo que no funciona.</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-sm border border-slate-100 p-6 card-lift flex gap-4">
+          <div class="icon-badge-soft w-11 h-11"><i data-lucide="users" class="w-5 h-5"></i></div>
+          <div>
+            <h4 class="font-heading font-semibold text-ink mb-1.5 leading-snug tracking-normal normal-case">Formación de Comité Mixto de SST</h4>
+            <p class="text-sm text-slate-600 leading-relaxed">Capacitamos a los integrantes del Comité Mixto de Seguridad y Salud en el Trabajo, tal como lo exige el Reglamento 522-06.</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-sm border border-slate-100 p-6 card-lift flex gap-4">
+          <div class="icon-badge-soft w-11 h-11"><i data-lucide="shield" class="w-5 h-5"></i></div>
+          <div>
+            <h4 class="font-heading font-semibold text-ink mb-1.5 leading-snug tracking-normal normal-case">Formación y entrenamiento de Brigadas de Emergencia</h4>
+            <p class="text-sm text-slate-600 leading-relaxed">Preparamos brigadas internas capaces de liderar la evacuación, el combate inicial de incendios y la atención de primeros auxilios dentro de su empresa.</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-sm border border-slate-100 p-6 card-lift flex gap-4">
+          <div class="icon-badge-soft w-11 h-11"><i data-lucide="zap" class="w-5 h-5"></i></div>
+          <div>
+            <h4 class="font-heading font-semibold text-ink mb-1.5 leading-snug tracking-normal normal-case">Capacitación en uso de Desfibriladores Externos Automáticos (DEA)</h4>
+            <p class="text-sm text-slate-600 leading-relaxed">Entrenamiento en el manejo correcto del DEA para actuar en los primeros minutos —los más críticos— de una emergencia cardíaca.</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-sm border border-slate-100 p-6 card-lift flex gap-4">
+          <div class="icon-badge-soft w-11 h-11"><i data-lucide="truck" class="w-5 h-5"></i></div>
+          <div>
+            <h4 class="font-heading font-semibold text-ink mb-1.5 leading-snug tracking-normal normal-case">Operación y manejo seguro de montacargas</h4>
+            <p class="text-sm text-slate-600 leading-relaxed">Certificación práctica para operadores, reduciendo accidentes en zonas de carga y almacén.</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-sm border border-slate-100 p-6 card-lift flex gap-4">
+          <div class="icon-badge-soft w-11 h-11"><i data-lucide="plug-zap" class="w-5 h-5"></i></div>
+          <div>
+            <h4 class="font-heading font-semibold text-ink mb-1.5 leading-snug tracking-normal normal-case">Seguridad eléctrica e industrial</h4>
+            <p class="text-sm text-slate-600 leading-relaxed">Formación en prevención de riesgos eléctricos e industriales para personal técnico y operativo.</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-sm border border-slate-100 p-6 card-lift flex gap-4">
+          <div class="icon-badge-soft w-11 h-11"><i data-lucide="flask-conical" class="w-5 h-5"></i></div>
+          <div>
+            <h4 class="font-heading font-semibold text-ink mb-1.5 leading-snug tracking-normal normal-case">Manejo básico de Hojas de Datos de Seguridad de Materiales (MSDS) y materiales peligrosos</h4>
+            <p class="text-sm text-slate-600 leading-relaxed">Capacitación para interpretar correctamente las hojas MSDS y manipular sustancias peligrosas con seguridad.</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-sm border border-slate-100 p-6 card-lift flex gap-4">
+          <div class="icon-badge-soft w-11 h-11"><i data-lucide="cloud-lightning" class="w-5 h-5"></i></div>
+          <div>
+            <h4 class="font-heading font-semibold text-ink mb-1.5 leading-snug tracking-normal normal-case">Prevención de riesgos ante fenómenos naturales (huracanes y terremotos)</h4>
+            <p class="text-sm text-slate-600 leading-relaxed">Protocolos de preparación y respuesta ante eventos naturales frecuentes en la región.</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-sm border border-slate-100 p-6 card-lift flex gap-4">
+          <div class="icon-badge-soft w-11 h-11"><i data-lucide="flame" class="w-5 h-5"></i></div>
+          <div>
+            <h4 class="font-heading font-semibold text-ink mb-1.5 leading-snug tracking-normal normal-case">Prevención y control de incendios</h4>
+            <p class="text-sm text-slate-600 leading-relaxed">Formación teórico-práctica en el uso de extintores y en la actuación temprana ante un conato de incendio.</p>
+          </div>
+        </div>
+        </div>
+      </div>
+      <div class="md:col-span-4 md:order-2">
+        <img src="assets/img/capacitacion-rcp.jpg" alt="Capacitación de primeros auxilios y RCP impartida por CEPASI" class="clip-tr w-full h-full min-h-[280px] object-cover">
+      </div>
+      </div>
+    </div>
+  </section>
+  <section id="mantenimiento" class="py-16 md:py-24 ">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8">
+      <div class="grid md:grid-cols-12 gap-10 items-start">
+      <div class="md:col-span-4 md:order-1">
+        <img src="assets/img/hero-mantenimiento.jpg" alt="Técnico de CEPASI dando mantenimiento a un extintor en taller" class="clip-tr w-full h-full min-h-[280px] object-cover">
+      </div>
+      <div class="md:col-span-5 md:order-2">
+        <div class="flex items-center gap-4 mb-4">
+          <span class="w-10 h-10 rounded-full bg-gradient-brand text-white font-heading font-bold text-base flex items-center justify-center shrink-0">3</span>
+          <h2 class="font-heading font-bold text-3xl md:text-4xl text-ink">Mantenimiento, Taller y Equipamiento</h2>
+        </div>
+        <p class="text-slate-600 leading-relaxed mb-8 max-w-2xl">Un extintor vencido o un detector de humo sin batería son fallas invisibles hasta el momento en que más se necesitan. Nuestro taller especializado se encarga de que sus sistemas contra incendios estén siempre operativos.</p>
+        <div class="grid sm:grid-cols-2 gap-4">
+        <div class="bg-white rounded-sm border border-slate-100 p-6 card-lift flex gap-4">
+          <div class="icon-badge-soft w-11 h-11"><i data-lucide="wrench" class="w-5 h-5"></i></div>
+          <div>
+            <h4 class="font-heading font-semibold text-ink mb-1.5 leading-snug tracking-normal normal-case">Recargas y mantenimiento preventivo/correctivo de extintores</h4>
+            <p class="text-sm text-slate-600 leading-relaxed">Inspección, recarga y reparación de extintores para garantizar que funcionen cuando se les necesite.</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-sm border border-slate-100 p-6 card-lift flex gap-4">
+          <div class="icon-badge-soft w-11 h-11"><i data-lucide="truck" class="w-5 h-5"></i></div>
+          <div>
+            <h4 class="font-heading font-semibold text-ink mb-1.5 leading-snug tracking-normal normal-case">Taller especializado de recarga a domicilio</h4>
+            <p class="text-sm text-slate-600 leading-relaxed">Vamos hasta su empresa o su hogar a recargar y dar mantenimiento a sus extintores, sin que tenga que trasladarlos.</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-sm border border-slate-100 p-6 card-lift flex gap-4">
+          <div class="icon-badge-soft w-11 h-11"><i data-lucide="flame-kindling" class="w-5 h-5"></i></div>
+          <div>
+            <h4 class="font-heading font-semibold text-ink mb-1.5 leading-snug tracking-normal normal-case">Venta de extintores (ABC, CO2, Halotron, tipo K y sistemas automáticos)</h4>
+            <p class="text-sm text-slate-600 leading-relaxed">Le asesoramos sobre el tipo de extintor correcto según el riesgo de cada área de su instalación.</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-sm border border-slate-100 p-6 card-lift flex gap-4">
+          <div class="icon-badge-soft w-11 h-11"><i data-lucide="radio-tower" class="w-5 h-5"></i></div>
+          <div>
+            <h4 class="font-heading font-semibold text-ink mb-1.5 leading-snug tracking-normal normal-case">Instalación de sistemas de detección de incendios y detectores de humo</h4>
+            <p class="text-sm text-slate-600 leading-relaxed">Diseño e instalación de sistemas de detección temprana adaptados a sus instalaciones.</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-sm border border-slate-100 p-6 card-lift flex gap-4">
+          <div class="icon-badge-soft w-11 h-11"><i data-lucide="lightbulb" class="w-5 h-5"></i></div>
+          <div>
+            <h4 class="font-heading font-semibold text-ink mb-1.5 leading-snug tracking-normal normal-case">Suministro e instalación de lámparas de emergencia</h4>
+            <p class="text-sm text-slate-600 leading-relaxed">Iluminación de emergencia para garantizar rutas de evacuación visibles ante un corte eléctrico.</p>
+          </div>
+        </div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </section>
+  <section id="equipos" class="py-16 md:py-24 bg-beige">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8">
+      <div class="grid md:grid-cols-12 gap-10 items-start">
+      <div class="md:col-span-5 md:order-1">
+        <div class="flex items-center gap-4 mb-4">
+          <span class="w-10 h-10 rounded-full bg-gradient-brand text-white font-heading font-bold text-base flex items-center justify-center shrink-0">4</span>
+          <h2 class="font-heading font-bold text-3xl md:text-4xl text-ink">Equipos de Emergencia y Primeros Auxilios</h2>
+        </div>
+        <p class="text-slate-600 leading-relaxed mb-8 max-w-2xl">Equipamos a su empresa o su hogar con los productos que marcan la diferencia en los primeros minutos de una emergencia: botiquines completos, camillas, señalética normativa y sistemas contra incendios.</p>
+        <div class="grid sm:grid-cols-2 gap-4">
+        <div class="bg-white rounded-sm border border-slate-100 p-6 card-lift flex gap-4">
+          <div class="icon-badge-soft w-11 h-11"><i data-lucide="briefcase-medical" class="w-5 h-5"></i></div>
+          <div>
+            <h4 class="font-heading font-semibold text-ink mb-1.5 leading-snug tracking-normal normal-case">Botiquines de primeros auxilios equipados</h4>
+            <p class="text-sm text-slate-600 leading-relaxed">Disponibles para 25, 50 y 100 personas, en gabinete de metal, plástico o bolso de tela, según el espacio y las necesidades de su empresa.</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-sm border border-slate-100 p-6 card-lift flex gap-4">
+          <div class="icon-badge-soft w-11 h-11"><i data-lucide="bed" class="w-5 h-5"></i></div>
+          <div>
+            <h4 class="font-heading font-semibold text-ink mb-1.5 leading-snug tracking-normal normal-case">Camillas de trauma para emergencias</h4>
+            <p class="text-sm text-slate-600 leading-relaxed">Incluyen inmovilizadores de cuello, arnés y sujeciones, listas para una respuesta rápida ante una lesión.</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-sm border border-slate-100 p-6 card-lift flex gap-4">
+          <div class="icon-badge-soft w-11 h-11"><i data-lucide="signpost" class="w-5 h-5"></i></div>
+          <div>
+            <h4 class="font-heading font-semibold text-ink mb-1.5 leading-snug tracking-normal normal-case">Señalética de seguridad industrial</h4>
+            <p class="text-sm text-slate-600 leading-relaxed">Rutas de evacuación, zonas de reunión, ubicación de extintores, riesgo eléctrico, prohibición de fumar y botiquines, con la señalización normativa que su empresa necesita.</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-sm border border-slate-100 p-6 card-lift flex gap-4">
+          <div class="icon-badge-soft w-11 h-11"><i data-lucide="droplets" class="w-5 h-5"></i></div>
+          <div>
+            <h4 class="font-heading font-semibold text-ink mb-1.5 leading-snug tracking-normal normal-case">Gabinetes y mangueras para sistemas contra incendios</h4>
+            <p class="text-sm text-slate-600 leading-relaxed">Equipamiento completo para sistemas fijos contra incendios en instalaciones industriales y comerciales.</p>
+          </div>
+        </div>
+        </div>
+      </div>
+      <div class="md:col-span-4 md:order-2">
+        <img src="assets/img/botiquin.jpg" alt="Botiquín de primeros auxilios equipado CEPASI" class="clip-tr w-full h-full min-h-[280px] object-cover">
+      </div>
+      </div>
+    </div>
+  </section>
+  <section class="relative overflow-hidden">
+    <div class="absolute inset-0">
+      <img src="assets/img/hero-mantenimiento.jpg" alt="" class="w-full h-full object-cover">
+      <div class="absolute inset-0 bg-ink/90"></div>
+    </div>
+    <div class="relative max-w-4xl mx-auto px-4 lg:px-8 py-16 md:py-20 text-center text-white">
+      <h2 class="font-heading font-bold text-3xl md:text-4xl mb-3">¿No sabe qué necesita su empresa?</h2>
+      <p class="text-white/85 max-w-2xl mx-auto mb-9 text-base md:text-lg">Solicite una evaluación gratuita y nuestro equipo técnico le recomendará exactamente lo que su operación requiere para cumplir y estar preparada.</p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-8">
+        <a href="https://wa.me/18092845807" target="_blank" rel="noopener" class="clip-br bg-gradient-brand hover:brightness-105 text-white font-bold uppercase tracking-wide text-sm px-7 py-4 inline-flex items-center gap-2 transition">
+          <i data-lucide="message-circle" class="w-5 h-5"></i> Solicitar evaluación gratuita
+        </a>
+        <a href="tel:+18092845807" class="flex items-center gap-3 group">
+          <div class="icon-badge w-14 h-14"><i data-lucide="phone" class="w-6 h-6"></i></div>
+          <span class="text-left">
+            <span class="block text-xs text-white/60 uppercase tracking-wide">Llámenos ahora</span>
+            <span class="block font-heading font-bold text-2xl group-hover:text-brandorange transition">809-284-5807</span>
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+  <footer class="bg-ink text-slate-300">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8 py-14 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
+      <div class="lg:col-span-2">
+        <div class="flex items-center gap-3 mb-4">
+          <img src="assets/img/logo-cepasi.png" alt="Logo CEPASI" class="w-12 h-12">
+          <span class="font-heading font-extrabold text-xl text-white">CEPASI</span>
+        </div>
+        <p class="text-sm leading-relaxed max-w-sm">Cuerpo de Evacuación, Primeros Auxilios y Seguridad Industrial, S.R.L. Asesoría, capacitación, mantenimiento y equipos para que su empresa cumpla el Reglamento 522-06 y proteja lo que más importa: su gente.</p>
+        <div class="flex items-center gap-3 mt-5">
+          <a href="#" aria-label="Facebook de CEPASI" class="w-9 h-9 rounded-full bg-white flex items-center justify-center text-ink hover:text-brandred transition"><svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M22 12.06C22 6.51 17.52 2 12 2S2 6.51 2 12.06c0 5 3.66 9.15 8.44 9.94v-7.03H7.9v-2.91h2.54V9.85c0-2.51 1.49-3.9 3.77-3.9 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.89h2.78l-.44 2.91h-2.34V22c4.78-.79 8.44-4.94 8.44-9.94z"/></svg></a>
+          <a href="https://www.instagram.com/seguridad_y_salud_ocupacional1/" target="_blank" rel="noopener" aria-label="Instagram de CEPASI" class="w-9 h-9 rounded-full bg-white flex items-center justify-center text-ink hover:text-brandred transition"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+        </div>
+      </div>
+      <div>
+        <h4 class="font-heading font-semibold text-white mb-4 text-lg">Enlaces rápidos</h4>
+        <ul class="space-y-2.5 text-sm"><li><a href="index.html" class="footer-link hover:text-white transition"><i data-lucide="house" class="bullet-icon w-3.5 h-3.5"></i>Inicio</a></li><li><a href="nosotros.html" class="footer-link hover:text-white transition"><i data-lucide="shield" class="bullet-icon w-3.5 h-3.5"></i>Nosotros</a></li><li><a href="servicios.html" class="footer-link hover:text-white transition"><i data-lucide="clipboard-list" class="bullet-icon w-3.5 h-3.5"></i>Servicios</a></li><li><a href="proyectos.html" class="footer-link hover:text-white transition"><i data-lucide="briefcase" class="bullet-icon w-3.5 h-3.5"></i>Proyectos</a></li><li><a href="blog.html" class="footer-link hover:text-white transition"><i data-lucide="book-open" class="bullet-icon w-3.5 h-3.5"></i>Blog</a></li><li><a href="contacto.html" class="footer-link hover:text-white transition"><i data-lucide="phone" class="bullet-icon w-3.5 h-3.5"></i>Contacto</a></li></ul>
+      </div>
+      <div>
+        <h4 class="font-heading font-semibold text-white mb-4 text-lg">Servicios</h4>
+        <ul class="space-y-2.5 text-sm"><li><a href="servicios.html#asesoria" class="footer-link hover:text-white transition"><i data-lucide="chevron-right" class="bullet-icon w-3.5 h-3.5"></i>Asesoría y Consultoría</a></li><li><a href="servicios.html#capacitaciones" class="footer-link hover:text-white transition"><i data-lucide="chevron-right" class="bullet-icon w-3.5 h-3.5"></i>Capacitaciones</a></li><li><a href="servicios.html#mantenimiento" class="footer-link hover:text-white transition"><i data-lucide="chevron-right" class="bullet-icon w-3.5 h-3.5"></i>Mantenimiento y Taller</a></li><li><a href="servicios.html#equipos" class="footer-link hover:text-white transition"><i data-lucide="chevron-right" class="bullet-icon w-3.5 h-3.5"></i>Equipos y Primeros Auxilios</a></li></ul>
+      </div>
+      <div>
+        <h4 class="font-heading font-semibold text-white mb-4 text-lg">Contacto</h4>
+        <ul class="space-y-3 text-sm">
+          <li class="flex items-start gap-2"><i data-lucide="map-pin" class="w-4 h-4 mt-0.5 shrink-0 text-brandorange"></i>C/ 16, Esquina 19, Villa Aura, Santo Domingo Oeste, R.D.</li>
+          <li class="flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4 shrink-0 text-brandorange"></i>809-284-5807 · 829-546-2313</li>
+          <li class="flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4 shrink-0 text-brandorange"></i>cuerpodeevacuacion01@gmail.com</li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t border-white/10">
+      <div class="max-w-7xl mx-auto px-4 lg:px-8 py-5 text-xs text-slate-400 text-center">
+        © 2026 CEPASI. Todos los derechos reservados.
+      </div>
+    </div>
+  </footer>
+
+  <a href="https://wa.me/18092845807" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp"
+     class="wa-pulse fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-lg hover:scale-105 transition">
+    <i data-lucide="message-circle" class="w-7 h-7"></i>
+  </a>
+
+  <script src="assets/js/nav.js"></script>
+  <script src="assets/js/slider.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

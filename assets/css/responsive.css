@@ -1,0 +1,31 @@
+/* CEPASI — responsive.css
+   Ajustes específicos de pantallas pequeñas / medianas. La mayoría del
+   layout responsive vive en las clases de Tailwind directamente en el HTML
+   (sm:/md:/lg:); este archivo solo cubre lo que no se puede resolver con
+   utilidades (menú móvil, corte diagonal del hero). */
+
+/* menú móvil colapsable */
+#mobile-menu {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .35s ease;
+}
+#mobile-menu.open {
+  max-height: 640px;
+}
+
+/* el corte diagonal del hero es más pronunciado en móvil (menos alto) */
+@media (min-width: 768px) {
+  .hero-clip {
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+  }
+}
+
+/* en pantallas muy angostas, reducir el tamaño del headline del slider
+   para que el degradado de énfasis no fuerce demasiadas líneas */
+@media (max-width: 380px) {
+  .slide h1 {
+    font-size: 1.65rem;
+    line-height: 1.15;
+  }
+}

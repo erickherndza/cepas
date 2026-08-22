@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CEPASI | Seguridad Industrial y Salud Ocupacional en República Dominicana</title>
+<meta name="description" content="CEPASI: asesoría, capacitación, mantenimiento y venta de equipos de seguridad industrial y primeros auxilios en R.D., alineados al Reglamento 522-06.">
+<link rel="icon" type="image/png" href="assets/img/logo-cepasi.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink: '#1A1A1A',
+          brandred: { DEFAULT: '#E63C24', dark: '#C7301A' },
+          brandorange: '#F79433',
+          lime: '#CBE24B',
+          navy: { DEFAULT: '#1F3B57', dark: '#152A3D', light: '#2C5075' },
+          beige: '#F5F3EF'
+        },
+        fontFamily: {
+          heading: ['Barlow Condensed', 'sans-serif'],
+          sans: ['Inter', 'sans-serif']
+        }
+      }
+    }
+  }
+</script>
+<link rel="stylesheet" href="assets/css/theme.css">
+<link rel="stylesheet" href="assets/css/typography.css">
+<link rel="stylesheet" href="assets/css/responsive.css">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+</head>
+<body class="bg-white font-sans text-slate-700">
+  <div class="hidden sm:block bg-ink text-white text-xs">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8 flex items-center justify-between py-2">
+      <div class="flex items-center gap-5">
+        <a href="contacto.html#mapa" class="flex items-center gap-1.5 hover:text-brandorange transition">
+          <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
+          <span>C/ 16, Esquina 19, Villa Aura, Santo Domingo Oeste, R.D.</span>
+        </a>
+        <a href="tel:+18092845807" class="hidden md:flex items-center gap-1.5 hover:text-brandorange transition">
+          <i data-lucide="phone" class="w-3.5 h-3.5"></i>
+          <span>809-284-5807</span>
+        </a>
+        <a href="mailto:cuerpodeevacuacion01@gmail.com" class="hidden lg:flex items-center gap-1.5 hover:text-brandorange transition">
+          <i data-lucide="mail" class="w-3.5 h-3.5"></i>
+          <span>cuerpodeevacuacion01@gmail.com</span>
+        </a>
+      </div>
+      <div class="flex items-center gap-3">
+        <a href="#" aria-label="Facebook de CEPASI" class="hover:text-brandorange transition"><svg viewBox="0 0 24 24" fill="currentColor" class="w-3.5 h-3.5"><path d="M22 12.06C22 6.51 17.52 2 12 2S2 6.51 2 12.06c0 5 3.66 9.15 8.44 9.94v-7.03H7.9v-2.91h2.54V9.85c0-2.51 1.49-3.9 3.77-3.9 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.89h2.78l-.44 2.91h-2.34V22c4.78-.79 8.44-4.94 8.44-9.94z"/></svg></a>
+        <a href="https://www.instagram.com/seguridad_y_salud_ocupacional1/" target="_blank" rel="noopener" aria-label="Instagram de CEPASI" class="hover:text-brandorange transition"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+      </div>
+    </div>
+  </div>
+  <header id="site-header" class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-100">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        <a href="index.html" class="flex items-center gap-3 shrink-0">
+          <img src="assets/img/logo-cepasi.png" alt="Logo CEPASI" class="w-12 h-12">
+          <span class="font-heading font-extrabold text-xl md:text-2xl text-ink leading-none">CEPASI</span>
+        </a>
+        <nav class="hidden lg:flex items-center gap-8 flex-1 justify-center">
+          <a href="index.html" class="font-semibold text-sm nav-active transition">Inicio</a>
+          <a href="nosotros.html" class="font-semibold text-sm text-ink hover:text-brandred transition">Nosotros</a>
+          <a href="servicios.html" class="font-semibold text-sm text-ink hover:text-brandred transition">Servicios</a>
+          <a href="proyectos.html" class="font-semibold text-sm text-ink hover:text-brandred transition">Proyectos</a>
+          <a href="blog.html" class="font-semibold text-sm text-ink hover:text-brandred transition">Blog</a>
+          <a href="contacto.html" class="font-semibold text-sm text-ink hover:text-brandred transition">Contacto</a>
+        </nav>
+        <div class="hidden lg:flex items-center gap-3 shrink-0">
+          <a href="https://wa.me/18092845807" target="_blank" rel="noopener" class="clip-br bg-gradient-brand hover:brightness-105 text-white font-bold text-sm uppercase tracking-wide px-6 py-3 transition shadow-sm">
+            Solicitar Asesoría
+          </a>
+        </div>
+        <button id="menu-toggle" aria-label="Abrir menú" class="lg:hidden p-2 text-ink">
+          <i data-lucide="menu" id="icon-open" class="w-7 h-7"></i>
+          <i data-lucide="x" id="icon-close" class="w-7 h-7 hidden"></i>
+        </button>
+      </div>
+      <div id="mobile-menu" class="lg:hidden">
+      <a href="index.html" class="block py-3 px-1 border-b border-slate-100 font-semibold nav-active">Inicio</a>
+      <a href="nosotros.html" class="block py-3 px-1 border-b border-slate-100 font-semibold text-ink hover:text-brandred">Nosotros</a>
+      <a href="servicios.html" class="block py-3 px-1 border-b border-slate-100 font-semibold text-ink hover:text-brandred">Servicios</a>
+      <a href="proyectos.html" class="block py-3 px-1 border-b border-slate-100 font-semibold text-ink hover:text-brandred">Proyectos</a>
+      <a href="blog.html" class="block py-3 px-1 border-b border-slate-100 font-semibold text-ink hover:text-brandred">Blog</a>
+      <a href="contacto.html" class="block py-3 px-1 border-b border-slate-100 font-semibold text-ink hover:text-brandred">Contacto</a>
+        <a href="https://wa.me/18092845807" target="_blank" rel="noopener" class="mt-3 clip-br bg-gradient-brand text-white font-bold text-sm uppercase tracking-wide px-5 py-3 flex items-center justify-center gap-2">
+          <i data-lucide="message-circle" class="w-4 h-4"></i> Solicitar Asesoría
+        </a>
+      </div>
+    </div>
+  </header>
+  <section id="hero-slider" class="relative hero-clip overflow-hidden">
+    <div class="slide active" data-slide>
+      <div class="absolute inset-0">
+        <img src="assets/img/hero-mantenimiento.jpg" alt="Técnico de CEPASI realizando mantenimiento a un extintor" class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-gradient-to-r from-ink/95 via-ink/80 to-ink/40"></div>
+      </div>
+      <div class="relative max-w-7xl mx-auto px-4 lg:px-8 pt-24 pb-32 md:pt-32 md:pb-48">
+        <div class="max-w-2xl">
+          <span class="eyebrow eyebrow-dot text-brandorange font-semibold text-xs uppercase tracking-widest">Seguridad industrial &amp; salud ocupacional en R.D.</span>
+          <h1 class="font-heading font-extrabold text-4xl md:text-6xl text-white mt-4 mb-6 leading-[1.05]">Seguridad Industrial y Salud Ocupacional <span class="text-gradient">en la que su empresa puede confiar</span></h1>
+          <p class="text-slate-200 text-base md:text-lg leading-relaxed mb-8 max-w-xl">En CEPASI diseñamos, implementamos y capacitamos en los sistemas de prevención, evacuación y primeros auxilios que su empresa necesita para cumplir con el Reglamento 522-06 y, sobre todo, para proteger lo más importante: la vida de su equipo.</p>
+          <div class="flex flex-col sm:flex-row gap-4">
+            <a href="https://wa.me/18092845807" target="_blank" rel="noopener" class="clip-br bg-gradient-brand hover:brightness-105 text-white font-bold uppercase tracking-wide text-sm px-7 py-4 inline-flex items-center justify-center gap-2 transition shadow-lg">Solicitar asesoría gratuita <i data-lucide="message-circle" class="w-5 h-5"></i></a>
+            <a href="servicios.html" class="border-2 border-white/70 text-white font-bold uppercase tracking-wide text-sm px-7 py-4 inline-flex items-center justify-center gap-2 hover:bg-white/10 transition">Ver nuestros servicios <i data-lucide="arrow-right" class="w-5 h-5"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide" data-slide>
+      <div class="absolute inset-0">
+        <img src="assets/img/capacitacion-rcp.jpg" alt="Capacitación práctica de primeros auxilios y RCP por el equipo de CEPASI" class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-gradient-to-r from-ink/95 via-ink/80 to-ink/40"></div>
+      </div>
+      <div class="relative max-w-7xl mx-auto px-4 lg:px-8 pt-24 pb-32 md:pt-32 md:pb-48">
+        <div class="max-w-2xl">
+          <span class="eyebrow eyebrow-dot text-brandorange font-semibold text-xs uppercase tracking-widest">Capacitaciones y Formación Técnica</span>
+          <h1 class="font-heading font-extrabold text-4xl md:text-6xl text-white mt-4 mb-6 leading-[1.05]">Capacitaciones y <span class="text-gradient">Formación Técnica</span></h1>
+          <p class="text-slate-200 text-base md:text-lg leading-relaxed mb-8 max-w-xl">Primeros auxilios, brigadas de emergencia, simulacros de evacuación, Comité Mixto de SST y más.</p>
+          <div class="flex flex-col sm:flex-row gap-4">
+            <a href="https://wa.me/18092845807" target="_blank" rel="noopener" class="clip-br bg-gradient-brand hover:brightness-105 text-white font-bold uppercase tracking-wide text-sm px-7 py-4 inline-flex items-center justify-center gap-2 transition shadow-lg">Solicitar asesoría gratuita <i data-lucide="message-circle" class="w-5 h-5"></i></a>
+            <a href="servicios.html#capacitaciones" class="border-2 border-white/70 text-white font-bold uppercase tracking-wide text-sm px-7 py-4 inline-flex items-center justify-center gap-2 hover:bg-white/10 transition">Ver capacitaciones <i data-lucide="arrow-right" class="w-5 h-5"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slide" data-slide>
+      <div class="absolute inset-0">
+        <img src="assets/img/botiquin.jpg" alt="Botiquín de primeros auxilios equipado CEPASI" class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-gradient-to-r from-ink/95 via-ink/80 to-ink/40"></div>
+      </div>
+      <div class="relative max-w-7xl mx-auto px-4 lg:px-8 pt-24 pb-32 md:pt-32 md:pb-48">
+        <div class="max-w-2xl">
+          <span class="eyebrow eyebrow-dot text-brandorange font-semibold text-xs uppercase tracking-widest">Equipos de Emergencia y Primeros Auxilios</span>
+          <h1 class="font-heading font-extrabold text-4xl md:text-6xl text-white mt-4 mb-6 leading-[1.05]">Equipos de Emergencia y <span class="text-gradient">Primeros Auxilios</span></h1>
+          <p class="text-slate-200 text-base md:text-lg leading-relaxed mb-8 max-w-xl">Botiquines, camillas, señalética industrial y sistemas contra incendios listos para instalar.</p>
+          <div class="flex flex-col sm:flex-row gap-4">
+            <a href="https://wa.me/18092845807" target="_blank" rel="noopener" class="clip-br bg-gradient-brand hover:brightness-105 text-white font-bold uppercase tracking-wide text-sm px-7 py-4 inline-flex items-center justify-center gap-2 transition shadow-lg">Solicitar asesoría gratuita <i data-lucide="message-circle" class="w-5 h-5"></i></a>
+            <a href="servicios.html#equipos" class="border-2 border-white/70 text-white font-bold uppercase tracking-wide text-sm px-7 py-4 inline-flex items-center justify-center gap-2 hover:bg-white/10 transition">Ver equipos <i data-lucide="arrow-right" class="w-5 h-5"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button data-slide-prev aria-label="Anterior" class="absolute left-3 md:left-5 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center backdrop-blur transition">
+      <i data-lucide="chevron-left" class="w-5 h-5"></i>
+    </button>
+    <button data-slide-next aria-label="Siguiente" class="absolute right-3 md:right-5 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center backdrop-blur transition">
+      <i data-lucide="chevron-right" class="w-5 h-5"></i>
+    </button>
+    <div class="absolute bottom-8 md:bottom-10 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2">
+      <button class="slider-dot active" aria-label="Ir a la diapositiva 1"></button>
+<button class="slider-dot" aria-label="Ir a la diapositiva 2"></button>
+<button class="slider-dot" aria-label="Ir a la diapositiva 3"></button>
+    </div>
+  </section>
+  <section class="bg-ink -mt-1">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8 py-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-white">
+        <div class="flex items-center gap-3">
+          <div class="icon-badge w-10 h-10 shrink-0"><i data-lucide="clipboard-check" class="w-4 h-4"></i></div>
+          <span class="text-sm font-medium">Asesoría técnica</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <div class="icon-badge w-10 h-10 shrink-0"><i data-lucide="award" class="w-4 h-4"></i></div>
+          <span class="text-sm font-medium">Capacitación certificada</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <div class="icon-badge w-10 h-10 shrink-0"><i data-lucide="package-check" class="w-4 h-4"></i></div>
+          <span class="text-sm font-medium">Venta e instalación de equipos</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <div class="icon-badge w-10 h-10 shrink-0"><i data-lucide="scale" class="w-4 h-4"></i></div>
+          <span class="text-sm font-medium">Cumplimiento del Reglamento 522-06</span>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="py-16 md:py-24">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8 grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+      <div class="relative mt-8 mb-10 sm:mr-10">
+        <img src="assets/img/hero-mantenimiento.jpg" alt="Técnico de CEPASI realizando mantenimiento a un extintor" class="clip-tr w-full h-[420px] object-cover">
+        <img src="assets/img/capacitacion-rcp.jpg" alt="Capacitación de primeros auxilios de CEPASI" class="hidden sm:block absolute -bottom-10 -right-10 w-44 h-52 object-cover rounded-sm shadow-xl border-4 border-white">
+        <div class="absolute -top-8 -left-6 bg-ink text-white rounded-sm px-6 py-5 shadow-xl">
+          <p class="font-heading font-extrabold text-3xl text-brandorange stat-pending inline-block pb-1">[Número]</p>
+          <p class="text-xs uppercase tracking-wide text-white/80 mt-1">años de experiencia</p>
+        </div>
+      </div>
+      <div>
+        <span class="eyebrow eyebrow-dot text-brandred font-semibold text-xs uppercase tracking-widest">Quiénes somos</span>
+        <h2 class="font-heading font-bold text-3xl md:text-4xl text-ink mt-3 mb-6">Prevención real, entrenada y sostenida en el tiempo</h2>
+        <p class="text-slate-600 leading-relaxed mb-4">En República Dominicana, la seguridad industrial dejó de ser un gasto opcional para convertirse en una obligación legal y, ante todo, en un acto de responsabilidad con las personas. CEPASI acompaña a empresas, instituciones y hogares en cada etapa de ese proceso: desde el análisis de riesgo y el diseño del plan de emergencia, hasta la capacitación de sus equipos y el mantenimiento de los sistemas contra incendios que ya tienen instalados.</p>
+        <p class="text-slate-600 leading-relaxed mb-8">No vendemos equipos sueltos ni cursos aislados. Construimos con usted una cultura de prevención sólida, medible y conforme a la normativa vigente.</p>
+        <div class="grid sm:grid-cols-2 gap-6">
+          <div class="flex gap-4">
+            <div class="icon-badge w-12 h-12"><i data-lucide="shield-check" class="w-5 h-5"></i></div>
+            <div>
+              <h4 class="font-heading font-bold text-ink">Cumplimiento real</h4>
+              <p class="text-sm text-slate-600 mt-1">Alineados al Reglamento 522-06.</p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <div class="icon-badge w-12 h-12"><i data-lucide="users" class="w-5 h-5"></i></div>
+            <div>
+              <h4 class="font-heading font-bold text-ink">Un solo equipo</h4>
+              <p class="text-sm text-slate-600 mt-1">De la asesoría a la ejecución.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="py-16 md:py-24 bg-beige">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8 grid lg:grid-cols-2 gap-14 lg:gap-20 items-center">
+      <div class="lg:order-1">
+        <img src="assets/img/dea.jpg" alt="Desfibrilador externo automático (DEA) de CEPASI" class="clip-tr w-full h-[420px] md:h-[480px] object-cover">
+      </div>
+      <div class="lg:order-2">
+        <span class="eyebrow eyebrow-dot text-brandred font-semibold text-xs uppercase tracking-widest">¿Por qué elegir CEPASI?</span>
+        <h2 class="font-heading font-bold text-3xl md:text-4xl text-ink mt-3 mb-8">Cuatro razones por las que las empresas confían en nosotros</h2>
+        <div class="space-y-7">
+        <div class="flex gap-5">
+          <div class="icon-badge w-14 h-14"><i data-lucide="layers" class="w-6 h-6"></i></div>
+          <div>
+            <h4 class="font-heading font-bold text-lg text-ink leading-snug">Experiencia integral, no fragmentada</h4>
+            <p class="text-sm text-slate-600 leading-relaxed mt-1">Un solo equipo que analiza el riesgo, diseña el plan, capacita a su personal, instala el equipo y le da mantenimiento después. Sin intermediarios ni soluciones a medias.</p>
+          </div>
+        </div>
+        <div class="flex gap-5">
+          <div class="icon-badge w-14 h-14"><i data-lucide="shield-check" class="w-6 h-6"></i></div>
+          <div>
+            <h4 class="font-heading font-bold text-lg text-ink leading-snug">Cumplimiento normativo real</h4>
+            <p class="text-sm text-slate-600 leading-relaxed mt-1">Trabajamos alineados al Reglamento 522-06 de Seguridad y Salud en el Trabajo, para que su empresa esté preparada tanto ante una inspección como ante una emergencia real.</p>
+          </div>
+        </div>
+        <div class="flex gap-5">
+          <div class="icon-badge w-14 h-14"><i data-lucide="shield-plus" class="w-6 h-6"></i></div>
+          <div>
+            <h4 class="font-heading font-bold text-lg text-ink leading-snug">Cobertura completa: personas y activos</h4>
+            <p class="text-sm text-slate-600 leading-relaxed mt-1">Protegemos a las personas (primeros auxilios, brigadas, DEA) y protegemos la infraestructura (extintores, detección de incendios, señalética), porque la seguridad completa exige ambas cosas.</p>
+          </div>
+        </div>
+        <div class="flex gap-5">
+          <div class="icon-badge w-14 h-14"><i data-lucide="truck" class="w-6 h-6"></i></div>
+          <div>
+            <h4 class="font-heading font-bold text-lg text-ink leading-snug">Servicio a domicilio y en planta</h4>
+            <p class="text-sm text-slate-600 leading-relaxed mt-1">Recargamos y damos mantenimiento a sus extintores donde usted esté, y llevamos las capacitaciones directamente a sus instalaciones.</p>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="servicios-resumen" class="py-16 md:py-24 bg-beige">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <span class="eyebrow eyebrow-dot text-brandred font-semibold text-xs uppercase tracking-widest">Nuestros servicios</span>
+        <h2 class="font-heading font-bold text-3xl md:text-4xl text-ink mt-3">Todo lo que su empresa necesita para prevenir y cumplir</h2>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <a href="servicios.html#asesoria" class="img-card clip-tr relative h-80 block overflow-hidden group">
+          <div class="img-card-photo absolute inset-0 bg-gradient-to-br from-ink to-navy flex items-center justify-center"><i data-lucide="clipboard-list" class="w-16 h-16 text-white/30"></i></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/40 to-transparent"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-6">
+            <div class="icon-badge w-11 h-11"><i data-lucide="clipboard-list" class="w-5 h-5"></i></div>
+            <h3 class="font-heading font-bold text-xl text-white mt-4 leading-tight">Asesoría y Consultoría<br>Especializada</h3>
+            <span class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-brandorange mt-2 opacity-0 group-hover:opacity-100 transition">Ver más <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span>
+          </div>
+        </a>
+        <a href="servicios.html#capacitaciones" class="img-card clip-tr relative h-80 block overflow-hidden group">
+          <img src="assets/img/capacitacion-rcp.jpg" alt="Capacitaciones y Formación Técnica" class="img-card-photo absolute inset-0 w-full h-full object-cover">
+          <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/40 to-transparent"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-6">
+            <div class="icon-badge w-11 h-11"><i data-lucide="graduation-cap" class="w-5 h-5"></i></div>
+            <h3 class="font-heading font-bold text-xl text-white mt-4 leading-tight">Capacitaciones y<br>Formación Técnica</h3>
+            <span class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-brandorange mt-2 opacity-0 group-hover:opacity-100 transition">Ver más <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span>
+          </div>
+        </a>
+        <a href="servicios.html#mantenimiento" class="img-card clip-tr relative h-80 block overflow-hidden group">
+          <img src="assets/img/hero-mantenimiento.jpg" alt="Mantenimiento, Taller y Equipamiento" class="img-card-photo absolute inset-0 w-full h-full object-cover">
+          <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/40 to-transparent"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-6">
+            <div class="icon-badge w-11 h-11"><i data-lucide="wrench" class="w-5 h-5"></i></div>
+            <h3 class="font-heading font-bold text-xl text-white mt-4 leading-tight">Mantenimiento, Taller y<br>Equipamiento</h3>
+            <span class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-brandorange mt-2 opacity-0 group-hover:opacity-100 transition">Ver más <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span>
+          </div>
+        </a>
+        <a href="servicios.html#equipos" class="img-card clip-tr relative h-80 block overflow-hidden group">
+          <img src="assets/img/botiquin.jpg" alt="Equipos de Emergencia y Primeros Auxilios" class="img-card-photo absolute inset-0 w-full h-full object-cover">
+          <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/40 to-transparent"></div>
+          <div class="absolute bottom-0 left-0 right-0 p-6">
+            <div class="icon-badge w-11 h-11"><i data-lucide="package" class="w-5 h-5"></i></div>
+            <h3 class="font-heading font-bold text-xl text-white mt-4 leading-tight">Equipos de Emergencia y<br>Primeros Auxilios</h3>
+            <span class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-brandorange mt-2 opacity-0 group-hover:opacity-100 transition">Ver más <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span>
+          </div>
+        </a>
+      </div>
+      <div class="text-center mt-10">
+        <a href="servicios.html" class="inline-flex items-center gap-2 text-ink font-bold uppercase tracking-wide text-sm hover:text-brandred transition">Ver todos los servicios <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+      </div>
+    </div>
+  </section>
+  <section class="bg-ink py-16">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center text-white">
+        <div>
+          <i data-lucide="building-2" class="w-7 h-7 text-brandorange mx-auto mb-3"></i>
+          <p class="font-heading font-extrabold text-3xl stat-pending inline-block pb-1">[Número]</p>
+          <p class="text-sm text-slate-300 mt-2">empresas asesoradas en seguridad industrial</p>
+        </div>
+        <div>
+          <i data-lucide="users" class="w-7 h-7 text-brandorange mx-auto mb-3"></i>
+          <p class="font-heading font-extrabold text-3xl stat-pending inline-block pb-1">[Número]</p>
+          <p class="text-sm text-slate-300 mt-2">personas capacitadas en primeros auxilios y evacuación</p>
+        </div>
+        <div>
+          <i data-lucide="calendar" class="w-7 h-7 text-brandorange mx-auto mb-3"></i>
+          <p class="font-heading font-extrabold text-3xl stat-pending inline-block pb-1">[Número]</p>
+          <p class="text-sm text-slate-300 mt-2">años de experiencia en el sector</p>
+        </div>
+        <div>
+          <i data-lucide="map-pin" class="w-7 h-7 text-brandorange mx-auto mb-3"></i>
+          <p class="font-heading font-extrabold text-xl pb-1">Santo Domingo</p>
+          <p class="text-sm text-slate-300 mt-2">y <span class="stat-pending">[zonas de servicio]</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="relative overflow-hidden">
+    <div class="absolute inset-0">
+      <img src="assets/img/hero-mantenimiento.jpg" alt="" class="w-full h-full object-cover">
+      <div class="absolute inset-0 bg-ink/90"></div>
+    </div>
+    <div class="relative max-w-4xl mx-auto px-4 lg:px-8 py-16 md:py-20 text-center text-white">
+      <h2 class="font-heading font-bold text-3xl md:text-4xl mb-3">Su empresa no puede improvisar cuando de seguridad se trata</h2>
+      <p class="text-white/85 max-w-2xl mx-auto mb-9 text-base md:text-lg">Hablemos de su plan de seguridad, sus certificaciones pendientes o el mantenimiento de sus equipos contra incendios. Nuestro equipo técnico le responde directamente por WhatsApp o teléfono.</p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-8">
+        <a href="https://wa.me/18092845807" target="_blank" rel="noopener" class="clip-br bg-gradient-brand hover:brightness-105 text-white font-bold uppercase tracking-wide text-sm px-7 py-4 inline-flex items-center gap-2 transition">
+          <i data-lucide="message-circle" class="w-5 h-5"></i> Contactar por WhatsApp
+        </a>
+        <a href="tel:+18092845807" class="flex items-center gap-3 group">
+          <div class="icon-badge w-14 h-14"><i data-lucide="phone" class="w-6 h-6"></i></div>
+          <span class="text-left">
+            <span class="block text-xs text-white/60 uppercase tracking-wide">Llámenos ahora</span>
+            <span class="block font-heading font-bold text-2xl group-hover:text-brandorange transition">809-284-5807</span>
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+  <footer class="bg-ink text-slate-300">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8 py-14 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
+      <div class="lg:col-span-2">
+        <div class="flex items-center gap-3 mb-4">
+          <img src="assets/img/logo-cepasi.png" alt="Logo CEPASI" class="w-12 h-12">
+          <span class="font-heading font-extrabold text-xl text-white">CEPASI</span>
+        </div>
+        <p class="text-sm leading-relaxed max-w-sm">Cuerpo de Evacuación, Primeros Auxilios y Seguridad Industrial, S.R.L. Asesoría, capacitación, mantenimiento y equipos para que su empresa cumpla el Reglamento 522-06 y proteja lo que más importa: su gente.</p>
+        <div class="flex items-center gap-3 mt-5">
+          <a href="#" aria-label="Facebook de CEPASI" class="w-9 h-9 rounded-full bg-white flex items-center justify-center text-ink hover:text-brandred transition"><svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M22 12.06C22 6.51 17.52 2 12 2S2 6.51 2 12.06c0 5 3.66 9.15 8.44 9.94v-7.03H7.9v-2.91h2.54V9.85c0-2.51 1.49-3.9 3.77-3.9 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.89h2.78l-.44 2.91h-2.34V22c4.78-.79 8.44-4.94 8.44-9.94z"/></svg></a>
+          <a href="https://www.instagram.com/seguridad_y_salud_ocupacional1/" target="_blank" rel="noopener" aria-label="Instagram de CEPASI" class="w-9 h-9 rounded-full bg-white flex items-center justify-center text-ink hover:text-brandred transition"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+        </div>
+      </div>
+      <div>
+        <h4 class="font-heading font-semibold text-white mb-4 text-lg">Enlaces rápidos</h4>
+        <ul class="space-y-2.5 text-sm"><li><a href="index.html" class="footer-link hover:text-white transition"><i data-lucide="house" class="bullet-icon w-3.5 h-3.5"></i>Inicio</a></li><li><a href="nosotros.html" class="footer-link hover:text-white transition"><i data-lucide="shield" class="bullet-icon w-3.5 h-3.5"></i>Nosotros</a></li><li><a href="servicios.html" class="footer-link hover:text-white transition"><i data-lucide="clipboard-list" class="bullet-icon w-3.5 h-3.5"></i>Servicios</a></li><li><a href="proyectos.html" class="footer-link hover:text-white transition"><i data-lucide="briefcase" class="bullet-icon w-3.5 h-3.5"></i>Proyectos</a></li><li><a href="blog.html" class="footer-link hover:text-white transition"><i data-lucide="book-open" class="bullet-icon w-3.5 h-3.5"></i>Blog</a></li><li><a href="contacto.html" class="footer-link hover:text-white transition"><i data-lucide="phone" class="bullet-icon w-3.5 h-3.5"></i>Contacto</a></li></ul>
+      </div>
+      <div>
+        <h4 class="font-heading font-semibold text-white mb-4 text-lg">Servicios</h4>
+        <ul class="space-y-2.5 text-sm"><li><a href="servicios.html#asesoria" class="footer-link hover:text-white transition"><i data-lucide="chevron-right" class="bullet-icon w-3.5 h-3.5"></i>Asesoría y Consultoría</a></li><li><a href="servicios.html#capacitaciones" class="footer-link hover:text-white transition"><i data-lucide="chevron-right" class="bullet-icon w-3.5 h-3.5"></i>Capacitaciones</a></li><li><a href="servicios.html#mantenimiento" class="footer-link hover:text-white transition"><i data-lucide="chevron-right" class="bullet-icon w-3.5 h-3.5"></i>Mantenimiento y Taller</a></li><li><a href="servicios.html#equipos" class="footer-link hover:text-white transition"><i data-lucide="chevron-right" class="bullet-icon w-3.5 h-3.5"></i>Equipos y Primeros Auxilios</a></li></ul>
+      </div>
+      <div>
+        <h4 class="font-heading font-semibold text-white mb-4 text-lg">Contacto</h4>
+        <ul class="space-y-3 text-sm">
+          <li class="flex items-start gap-2"><i data-lucide="map-pin" class="w-4 h-4 mt-0.5 shrink-0 text-brandorange"></i>C/ 16, Esquina 19, Villa Aura, Santo Domingo Oeste, R.D.</li>
+          <li class="flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4 shrink-0 text-brandorange"></i>809-284-5807 · 829-546-2313</li>
+          <li class="flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4 shrink-0 text-brandorange"></i>cuerpodeevacuacion01@gmail.com</li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t border-white/10">
+      <div class="max-w-7xl mx-auto px-4 lg:px-8 py-5 text-xs text-slate-400 text-center">
+        © 2026 CEPASI. Todos los derechos reservados.
+      </div>
+    </div>
+  </footer>
+
+  <a href="https://wa.me/18092845807" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp"
+     class="wa-pulse fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-lg hover:scale-105 transition">
+    <i data-lucide="message-circle" class="w-7 h-7"></i>
+  </a>
+
+  <script src="assets/js/nav.js"></script>
+  <script src="assets/js/slider.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,165 @@
+/* CEPASI — theme.css
+   Apariencia general del sitio: paleta de color, degradados, botones,
+   tarjetas, iconos, animaciones y la esquina cortada característica del
+   sistema visual "Firegard". Ver typography.css (letras) y responsive.css
+   (ajustes de pantallas pequeñas) para el resto del sistema. */
+
+:root {
+  --ink: #1A1A1A;
+  --red: #E63C24;
+  --orange: #F79433;
+  --lime: #CBE24B;
+  --navy: #1F3B57;
+  --body-gray: #6B7280;
+  --beige: #F5F3EF;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: var(--body-gray);
+}
+
+/* ---- degradado de marca ---- */
+
+.text-gradient {
+  background: linear-gradient(135deg, var(--red), var(--orange));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.bg-gradient-brand {
+  background: linear-gradient(135deg, var(--red), var(--orange));
+}
+
+/* ---- esquina cortada (elemento distintivo del sistema visual) ---- */
+
+.clip-tr {
+  clip-path: polygon(0 0, calc(100% - 28px) 0, 100% 28px, 100% 100%, 0 100%);
+}
+.clip-br {
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%);
+}
+.clip-br-lg {
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 22px), calc(100% - 22px) 100%, 0 100%);
+}
+
+/* corte diagonal del borde inferior del hero */
+.hero-clip {
+  clip-path: polygon(0 0, 100% 0, 100% 92%, 0 100%);
+}
+
+/* ---- botones ---- */
+
+.btn-lime {
+  background: var(--lime);
+  color: var(--ink);
+  border-radius: 9999px;
+  font-weight: 700;
+}
+.btn-lime:hover {
+  filter: brightness(0.95);
+}
+
+/* ---- iconos circulares ---- */
+
+.icon-badge {
+  background: linear-gradient(135deg, var(--red), var(--orange));
+  color: #fff;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.icon-badge-soft {
+  background: #F1F0EC;
+  color: var(--orange);
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* ---- tarjetas ---- */
+
+.card-lift {
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.card-lift:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 34px -14px rgba(26, 26, 26, 0.35);
+}
+
+.img-card-photo {
+  transition: transform .5s ease;
+}
+.img-card:hover .img-card-photo {
+  transform: scale(1.07);
+}
+
+/* ---- animaciones ---- */
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-up {
+  animation: fadeUp 0.6s ease-out both;
+}
+.delay-1 { animation-delay: .1s; }
+.delay-2 { animation-delay: .2s; }
+.delay-3 { animation-delay: .3s; }
+.delay-4 { animation-delay: .4s; }
+
+.wa-pulse {
+  animation: waPulse 2.2s infinite;
+}
+@keyframes waPulse {
+  0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.55); }
+  70% { box-shadow: 0 0 0 14px rgba(37, 211, 102, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+}
+
+/* ---- slider del hero ---- */
+
+.slide {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .8s ease;
+}
+.slide.active {
+  opacity: 1;
+  visibility: visible;
+  position: relative;
+}
+.slide:not(.active) {
+  position: absolute;
+  inset: 0;
+}
+
+.slider-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 9999px;
+  background: rgba(255,255,255,0.4);
+  transition: background .25s ease, width .25s ease;
+}
+.slider-dot.active {
+  background: linear-gradient(135deg, var(--red), var(--orange));
+  width: 26px;
+}
+
+/* ---- misceláneo ---- */
+
+.map-frame {
+  filter: grayscale(15%) contrast(1.05);
+}
+
+.stat-pending {
+  border-bottom: 2px dashed rgba(255,255,255,0.55);
+}

@@ -1,0 +1,52 @@
+/* CEPASI — typography.css
+   Letras, bordes y tratamiento de texto: familias tipográficas, estilo de
+   títulos (mayúsculas industrial), enlaces activos y etiquetas de sección.
+   Ver theme.css (color/degradados/botones) y responsive.css (pantallas
+   pequeñas) para el resto del sistema visual. */
+
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+h1, h2, h3, h4, .font-heading {
+  font-family: 'Barlow Condensed', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+
+/* etiqueta pequeña sobre los títulos de sección */
+.eyebrow {
+  letter-spacing: .14em;
+}
+.eyebrow-dot::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, var(--red), var(--orange));
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+/* enlace de navegación activo (página actual) */
+.nav-active {
+  color: var(--red) !important;
+  font-weight: 700;
+}
+
+/* enlaces del footer con ícono de viñeta en vez de punto */
+.footer-link {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.footer-link .bullet-icon {
+  color: var(--orange);
+  flex-shrink: 0;
+}
+
+/* separación de anclas bajo el header sticky */
+section[id] {
+  scroll-margin-top: 140px;
+}
