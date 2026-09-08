@@ -687,9 +687,14 @@ def category_block(anchor, number, title, intro, items, image=None, image_alt=""
   </section>"""
 
 
-def _svc(icon, slug, title, desc):
-    return {"icon": icon, "slug": slug, "title": title, "desc": desc}
+def _svc(icon, slug, title, desc, estandares=None):
+    return {"icon": icon, "slug": slug, "title": title, "desc": desc, "estandares": estandares or []}
 
+
+# Cada entrada de "estandares" es (norma_u_organismo, dato_verificado, fuente).
+# Investigado y cotejado contra al menos dos fuentes cuando fue posible (ver
+# notas de verificación del proceso de investigación); son referencias
+# informativas de organismos técnicos externos, no certificaciones de CEPASI.
 
 SERVICE_CATEGORIES = [
     {
@@ -697,10 +702,26 @@ SERVICE_CATEGORIES = [
         "intro": "Antes de capacitar o instalar un solo equipo, hay que entender el riesgo. Nuestro equipo de consultoría evalúa su empresa a fondo y traduce esa evaluación en documentos y planes claros, aplicables y alineados con la ley dominicana.",
         "image": None, "image_alt": "", "reverse": False, "bg": "",
         "items": [
-            _svc("shield-check", "asesoria-integral-sst", "Asesoría y consultoría integral en Seguridad Industrial y Salud Ocupacional", "Acompañamiento experto para que su empresa identifique sus riesgos, priorice sus inversiones en seguridad y cumpla con sus obligaciones en materia de SST."),
-            _svc("file-text", "manual-sst", "Diseño del Manual de Seguridad y Salud en el Trabajo (SST)", "Elaboramos el manual oficial de su empresa, adaptado a su actividad, sus instalaciones y los riesgos específicos de su operación, en conformidad con el Reglamento 522-06."),
-            _svc("search", "analisis-de-riesgo", "Elaboración de análisis de riesgo corporativos e industriales", "Identificamos los peligros presentes en sus instalaciones —incendios, eléctricos, estructurales, operativos— y entregamos un informe técnico con recomendaciones concretas de mitigación."),
-            _svc("map", "planes-de-emergencia", "Elaboración y estructuración de planes de emergencia para empresas y viviendas", "Diseñamos rutas de evacuación, puntos de encuentro y protocolos de actuación claros, tanto para instalaciones corporativas como para el hogar."),
+            _svc("shield-check", "asesoria-integral-sst", "Asesoría y consultoría integral en Seguridad Industrial y Salud Ocupacional", "Acompañamiento experto para que su empresa identifique sus riesgos, priorice sus inversiones en seguridad y cumpla con sus obligaciones en materia de SST.", [
+                ("ISO 45001:2018", "Especifica los requisitos de un sistema de gestión de la seguridad y salud en el trabajo: liderazgo, participación de los trabajadores e identificación de peligros.", "ISO"),
+                ("Reglamento 522-06, Art. 8.1", "Obliga a todo empleador a elaborar un Programa de Seguridad y Salud en el Trabajo y renovarlo ante el Ministerio de Trabajo cada 3 años.", "Ministerio de Trabajo, R.D."),
+                ("OIT, Convenios 155 y 187", "Convenios fundamentales de la OIT que establecen el marco de política nacional en SST y la promoción de sistemas de gestión.", "OIT"),
+            ]),
+            _svc("file-text", "manual-sst", "Diseño del Manual de Seguridad y Salud en el Trabajo (SST)", "Elaboramos el manual oficial de su empresa, adaptado a su actividad, sus instalaciones y los riesgos específicos de su operación, en conformidad con el Reglamento 522-06.", [
+                ("Reglamento 522-06, Resolución 04-2007", "Define 20 elementos básicos obligatorios de todo programa de SST: análisis de accidentes, entrenamiento, preparación para emergencias, entre otros.", "Ministerio de Trabajo, R.D."),
+                ("Reglamento 522-06, Art. 8.2", "Cualquier cambio de maquinaria, productos o métodos de trabajo obliga a actualizar el programa y solicitar una nueva evaluación de riesgos.", "Ministerio de Trabajo, R.D."),
+                ("ISO 45001:2018", "Exige mantener información documentada de la política, los objetivos y los procedimientos del sistema de gestión de SST.", "ISO"),
+            ]),
+            _svc("search", "analisis-de-riesgo", "Elaboración de análisis de riesgo corporativos e industriales", "Identificamos los peligros presentes en sus instalaciones —incendios, eléctricos, estructurales, operativos— y entregamos un informe técnico con recomendaciones concretas de mitigación.", [
+                ("ISO 31000:2018", "Norma internacional que estructura la gestión de riesgos en identificación, análisis, evaluación y tratamiento del riesgo.", "ISO"),
+                ("Reglamento 522-06, Art. 7", "Obliga al empleador a evitar los riesgos en su origen, controlar los que no se puedan evitar y sustituir lo riesgoso por alternativas de menor riesgo.", "Ministerio de Trabajo, R.D."),
+                ("OSHA 29 CFR 1910.132(d)", "Exige evaluar el lugar de trabajo para identificar peligros y certificar por escrito que dicha evaluación fue realizada.", "OSHA, EE. UU."),
+            ]),
+            _svc("map", "planes-de-emergencia", "Elaboración y estructuración de planes de emergencia para empresas y viviendas", "Diseñamos rutas de evacuación, puntos de encuentro y protocolos de actuación claros, tanto para instalaciones corporativas como para el hogar.", [
+                ("OSHA 29 CFR 1910.38", "Un plan de acción de emergencia debe incluir procedimientos de evacuación, rutas de salida asignadas, conteo de personal y funciones de rescate.", "OSHA, EE. UU."),
+                ("NFPA 1660 (heredero de NFPA 1600)", "Estándar internacional de referencia para programas de gestión de emergencias, continuidad y crisis en cualquier tipo de organización.", "NFPA"),
+                ("Reglamento 522-06", "Incluye la preparación para emergencias como uno de los elementos obligatorios de todo programa de seguridad y salud en el trabajo.", "Ministerio de Trabajo, R.D."),
+            ]),
         ],
     },
     {
@@ -708,18 +729,58 @@ SERVICE_CATEGORIES = [
         "intro": "Un plan de emergencia solo funciona si las personas saben ejecutarlo. Formamos a su personal —y, si lo desea, a su familia— para que sepan actuar con calma y eficacia ante cualquier situación de riesgo.",
         "image": CAPACITACION_IMG, "image_alt": "Capacitación de primeros auxilios y RCP impartida por CEPASI", "reverse": False, "bg": "bg-beige",
         "items": [
-            _svc("activity", "primeros-auxilios", "Primeros auxilios básicos y avanzados", "Formación práctica para reconocer y atender emergencias médicas mientras llega ayuda especializada."),
-            _svc("siren", "manejo-de-emergencias", "Capacitación integral para el manejo de emergencias en las empresas", "Preparamos a su personal para responder de forma coordinada ante incendios, evacuaciones y otras situaciones críticas."),
-            _svc("house", "prevencion-empresas-hogares", "Organización y prevención de emergencias en empresas y hogares", "Estructuramos protocolos de prevención adaptados tanto al entorno corporativo como al residencial."),
-            _svc("door-open", "simulacros-de-evacuacion", "Ejecución de simulacros de evacuación", "Ponemos a prueba los planes de emergencia en condiciones reales, para corregir a tiempo lo que no funciona."),
-            _svc("users", "comite-mixto-sst", "Formación de Comité Mixto de SST", "Capacitamos a los integrantes del Comité Mixto de Seguridad y Salud en el Trabajo, tal como lo exige el Reglamento 522-06."),
-            _svc("shield", "brigadas-de-emergencia", "Formación y entrenamiento de Brigadas de Emergencia", "Preparamos brigadas internas capaces de liderar la evacuación, el combate inicial de incendios y la atención de primeros auxilios dentro de su empresa."),
-            _svc("zap", "uso-de-dea", "Capacitación en uso de Desfibriladores Externos Automáticos (DEA)", "Entrenamiento en el manejo correcto del DEA para actuar en los primeros minutos —los más críticos— de una emergencia cardíaca."),
-            _svc("truck", "manejo-de-montacargas", "Operación y manejo seguro de montacargas", "Certificación práctica para operadores, reduciendo accidentes en zonas de carga y almacén."),
-            _svc("plug-zap", "seguridad-electrica-industrial", "Seguridad eléctrica e industrial", "Formación en prevención de riesgos eléctricos e industriales para personal técnico y operativo."),
-            _svc("flask-conical", "manejo-de-msds", "Manejo básico de Hojas de Datos de Seguridad de Materiales (MSDS) y materiales peligrosos", "Capacitación para interpretar correctamente las hojas MSDS y manipular sustancias peligrosas con seguridad."),
-            _svc("cloud-lightning", "riesgos-fenomenos-naturales", "Prevención de riesgos ante fenómenos naturales (huracanes y terremotos)", "Protocolos de preparación y respuesta ante eventos naturales frecuentes en la región."),
-            _svc("flame", "prevencion-control-incendios", "Prevención y control de incendios", "Formación teórico-práctica en el uso de extintores y en la actuación temprana ante un conato de incendio."),
+            _svc("activity", "primeros-auxilios", "Primeros auxilios básicos y avanzados", "Formación práctica para reconocer y atender emergencias médicas mientras llega ayuda especializada.", [
+                ("AHA / ILCOR, Guías 2025", "En adultos, recomiendan compresiones torácicas de 100 a 120 por minuto, a una profundidad de 5 a 6 cm, con relación de 30:2.", "American Heart Association"),
+                ("Reglamento 522-06, Resolución 09-26 (2026)", "Exige un responsable de primeros auxilios capacitado por cada 50 trabajadores de turno, con recapacitación cada 2 años.", "Ministerio de Trabajo, R.D."),
+                ("Reglamento 522-06", "Exige un puesto de primeros auxilios dedicado en centros de trabajo con 100 o más trabajadores.", "Ministerio de Trabajo, R.D."),
+            ]),
+            _svc("siren", "manejo-de-emergencias", "Capacitación integral para el manejo de emergencias en las empresas", "Preparamos a su personal para responder de forma coordinada ante incendios, evacuaciones y otras situaciones críticas.", [
+                ("NFPA 1660 (heredero de NFPA 1600)", "Exige evaluar las necesidades de entrenamiento y ejecutar un programa progresivo de ejercicios, desde simulacros de gabinete hasta simulacros a escala completa.", "NFPA"),
+                ("ISO 22320:2018", "Norma internacional de referencia para la coordinación entre los actores involucrados en la respuesta a un incidente.", "ISO"),
+                ("Reglamento 522-06", "Incluye la preparación para emergencias entre los elementos obligatorios de todo programa de seguridad y salud en el trabajo.", "Ministerio de Trabajo, R.D."),
+            ]),
+            _svc("house", "prevencion-empresas-hogares", "Organización y prevención de emergencias en empresas y hogares", "Estructuramos protocolos de prevención adaptados tanto al entorno corporativo como al residencial.", [
+                ("Reglamento 522-06", "Exige que toda empresa cuente con un Comité Mixto de SST (15 o más trabajadores) o un Coordinador de Seguridad y Salud en las de menor tamaño.", "Ministerio de Trabajo, R.D."),
+                ("Reglamento 522-06", "Exige que todo programa de SST contemple señalización de seguridad, control de riesgos y entrenamiento del personal y la administración.", "Ministerio de Trabajo, R.D."),
+            ]),
+            _svc("door-open", "simulacros-de-evacuacion", "Ejecución de simulacros de evacuación", "Ponemos a prueba los planes de emergencia en condiciones reales, para corregir a tiempo lo que no funciona.", [
+                ("OSHA 29 CFR 1910.38", "Exige documentar el plan de acción de emergencia y ejecutar simulacros con la frecuencia que el propio plan establezca.", "OSHA, EE. UU."),
+                ("Reglamento 522-06", "Exige mantener libres y señalizadas las vías y salidas de evacuación, con puertas que abran en el sentido de la salida.", "Ministerio de Trabajo, R.D."),
+            ]),
+            _svc("users", "comite-mixto-sst", "Formación de Comité Mixto de SST", "Capacitamos a los integrantes del Comité Mixto de Seguridad y Salud en el Trabajo, tal como lo exige el Reglamento 522-06.", [
+                ("Reglamento 522-06, Art. 6.1", "Toda empresa con 15 o más trabajadores debe constituir un Comité Mixto de Seguridad y Salud en el Trabajo.", "Ministerio de Trabajo, R.D."),
+                ("Reglamento 522-06, Art. 6.4.2", "El comité debe reunirse al menos una vez al mes y remitir las actas a la Dirección General de Higiene y Seguridad Industrial.", "Ministerio de Trabajo, R.D."),
+                ("OIT, Convenio 155 (1981)", "Respalda internacionalmente la cooperación entre empleadores y trabajadores mediante comités paritarios de seguridad y salud.", "OIT"),
+            ]),
+            _svc("shield", "brigadas-de-emergencia", "Formación y entrenamiento de Brigadas de Emergencia", "Preparamos brigadas internas capaces de liderar la evacuación, el combate inicial de incendios y la atención de primeros auxilios dentro de su empresa.", [
+                ("NFPA 600", "Establece los requisitos mínimos de organización, entrenamiento y equipamiento de brigadas de emergencia/incendio en instalaciones industriales y comerciales.", "NFPA"),
+                ("OSHA 29 CFR 1910.156", "Exige capacitación de la brigada acorde a sus funciones, con entrenamiento al menos anual y refuerzo trimestral para quienes hacen extinción estructural interior.", "OSHA, EE. UU."),
+            ]),
+            _svc("zap", "uso-de-dea", "Capacitación en uso de Desfibriladores Externos Automáticos (DEA)", "Entrenamiento en el manejo correcto del DEA para actuar en los primeros minutos —los más críticos— de una emergencia cardíaca.", [
+                ("AHA, Cadena de Supervivencia", "Sitúa la desfibrilación temprana con DEA como uno de los eslabones más determinantes para la sobrevivencia ante un paro cardíaco.", "American Heart Association"),
+                ("Reglamento 522-06, Resolución 09-26 (2026)", "Incorpora la disposición de desfibriladores externos automáticos entre los requisitos de respuesta a emergencias laborales.", "Ministerio de Trabajo, R.D."),
+            ]),
+            _svc("truck", "manejo-de-montacargas", "Operación y manejo seguro de montacargas", "Certificación práctica para operadores, reduciendo accidentes en zonas de carga y almacén.", [
+                ("OSHA 29 CFR 1910.178(l)", "Exige formación teórica, práctica y una evaluación de desempeño antes de autorizar a un operador de montacargas.", "OSHA, EE. UU."),
+                ("OSHA 29 CFR 1910.178(l)(4)(iii)", "El desempeño de cada operador certificado debe reevaluarse al menos una vez cada 3 años.", "OSHA, EE. UU."),
+            ]),
+            _svc("plug-zap", "seguridad-electrica-industrial", "Seguridad eléctrica e industrial", "Formación en prevención de riesgos eléctricos e industriales para personal técnico y operativo.", [
+                ("NFPA 70E", "Establece las prácticas de trabajo seguras frente a choque eléctrico y arco eléctrico (arc flash) en el entorno laboral.", "NFPA"),
+                ("NFPA 70E", "Exige un análisis de riesgo de arco eléctrico que determine la energía incidente y la categoría de equipo de protección personal requerida.", "NFPA"),
+            ]),
+            _svc("flask-conical", "manejo-de-msds", "Manejo básico de Hojas de Datos de Seguridad de Materiales (MSDS) y materiales peligrosos", "Capacitación para interpretar correctamente las hojas MSDS y manipular sustancias peligrosas con seguridad.", [
+                ("OSHA 29 CFR 1910.1200 / SGA-GHS de la ONU", "Exige que las hojas de datos de seguridad (SDS) sigan un formato estandarizado de 16 secciones.", "OSHA / ONU"),
+                ("SGA-GHS de la ONU", "Establece 9 pictogramas de peligro estandarizados para etiquetas y hojas de seguridad, cubriendo peligros físicos, para la salud y ambientales.", "ONU"),
+            ]),
+            _svc("cloud-lightning", "riesgos-fenomenos-naturales", "Prevención de riesgos ante fenómenos naturales (huracanes y terremotos)", "Protocolos de preparación y respuesta ante eventos naturales frecuentes en la región.", [
+                ("Ley 147-02 (R.D.)", "Crea el Sistema Nacional para la Prevención, Mitigación y Respuesta ante Desastres y el Centro de Operaciones de Emergencia (COE).", "Ley 147-02, R.D."),
+                ("NFPA 1660 (heredero de NFPA 1600)", "Reconocido como estándar de referencia para programas de gestión de emergencias ante todo tipo de riesgo.", "NFPA"),
+                ("OSHA", "Recomienda identificar zonas seguras dentro del lugar de trabajo y practicar regularmente los planes de evacuación ante sismos.", "OSHA, EE. UU."),
+            ]),
+            _svc("flame", "prevencion-control-incendios", "Prevención y control de incendios", "Formación teórico-práctica en el uso de extintores y en la actuación temprana ante un conato de incendio.", [
+                ("NFPA 10", "Clasifica los incendios en 5 clases según el material combustible —A, B, C, D y K— como base para seleccionar el extintor correcto.", "NFPA"),
+                ("OSHA 29 CFR 1910.157", "Exige capacitación general sobre extintores portátiles al momento de la contratación y al menos una vez al año.", "OSHA, EE. UU."),
+            ]),
         ],
     },
     {
@@ -727,11 +788,28 @@ SERVICE_CATEGORIES = [
         "intro": "Un extintor vencido o un detector de humo sin batería son fallas invisibles hasta el momento en que más se necesitan. Nuestro taller especializado se encarga de que sus sistemas contra incendios estén siempre operativos.",
         "image": HERO_IMG, "image_alt": "Técnico de CEPASI dando mantenimiento a un extintor en taller", "reverse": True, "bg": "",
         "items": [
-            _svc("wrench", "recarga-mantenimiento-extintores", "Recargas y mantenimiento preventivo/correctivo de extintores", "Inspección, recarga y reparación de extintores para garantizar que funcionen cuando se les necesite."),
-            _svc("truck", "taller-recarga-a-domicilio", "Taller especializado de recarga a domicilio", "Vamos hasta su empresa o su hogar a recargar y dar mantenimiento a sus extintores, sin que tenga que trasladarlos."),
-            _svc("flame-kindling", "venta-de-extintores", "Venta de extintores (ABC, CO2, Halotron, tipo K y sistemas automáticos)", "Le asesoramos sobre el tipo de extintor correcto según el riesgo de cada área de su instalación."),
-            _svc("radio-tower", "deteccion-de-incendios", "Instalación de sistemas de detección de incendios y detectores de humo", "Diseño e instalación de sistemas de detección temprana adaptados a sus instalaciones."),
-            _svc("lightbulb", "lamparas-de-emergencia", "Suministro e instalación de lámparas de emergencia", "Iluminación de emergencia para garantizar rutas de evacuación visibles ante un corte eléctrico."),
+            _svc("wrench", "recarga-mantenimiento-extintores", "Recargas y mantenimiento preventivo/correctivo de extintores", "Inspección, recarga y reparación de extintores para garantizar que funcionen cuando se les necesite.", [
+                ("NFPA 10", "Exige inspección visual mensual y un mantenimiento anual completo realizado por un técnico certificado.", "NFPA"),
+                ("NFPA 10", "Fija la prueba hidrostática cada 5 años para extintores de agua, espuma, CO2 y agente húmedo, y cada 12 años para los de polvo químico seco.", "NFPA"),
+                ("NORDOM 759", "Norma dominicana que regula la selección, inspección, mantenimiento y prueba de extintores portátiles.", "INDOCAL, R.D."),
+            ]),
+            _svc("truck", "taller-recarga-a-domicilio", "Taller especializado de recarga a domicilio", "Vamos hasta su empresa o su hogar a recargar y dar mantenimiento a sus extintores, sin que tenga que trasladarlos.", [
+                ("NFPA 10", "Exige que el mantenimiento anual y la recarga tras cualquier uso sean ejecutados por personal certificado, con procedimientos específicos según el tipo de agente.", "NFPA"),
+                ("NORDOM 759", "Norma dominicana equivalente que aplica a la recarga y prueba de extintores portátiles en el país.", "INDOCAL, R.D."),
+            ]),
+            _svc("flame-kindling", "venta-de-extintores", "Venta de extintores (ABC, CO2, Halotron, tipo K y sistemas automáticos)", "Le asesoramos sobre el tipo de extintor correcto según el riesgo de cada área de su instalación.", [
+                ("NFPA 10", "Clasifica los extintores según el tipo de fuego que combaten: ABC (fosfato monoamónico), CO2, agentes limpios como Halotron y agente húmedo para cocinas (Clase K).", "NFPA"),
+                ("UL 711 / UL 299 / UL 2129", "Normas de listado UL que rigen la construcción, los materiales y el rating de cada extintor.", "UL Solutions"),
+                ("NORDOM 567", "Norma dominicana que define las clases de fuego usadas para seleccionar el agente extintor correcto.", "INDOCAL, R.D."),
+            ]),
+            _svc("radio-tower", "deteccion-de-incendios", "Instalación de sistemas de detección de incendios y detectores de humo", "Diseño e instalación de sistemas de detección temprana adaptados a sus instalaciones.", [
+                ("NFPA 72", "Establece un régimen de pruebas escalonado —mensual, trimestral, semestral y anual— para paneles, detectores y dispositivos de notificación.", "NFPA"),
+                ("NORDOM 901", "Norma dominicana sobre alarmas de incendio y señalización, basada explícitamente en NFPA 72.", "INDOCAL, R.D."),
+            ]),
+            _svc("lightbulb", "lamparas-de-emergencia", "Suministro e instalación de lámparas de emergencia", "Iluminación de emergencia para garantizar rutas de evacuación visibles ante un corte eléctrico.", [
+                ("NFPA 101 (Life Safety Code)", "Exige que la iluminación de emergencia en rutas de salida provea un mínimo de 90 minutos de autonomía y se active en menos de 10 segundos.", "NFPA"),
+                ("UL 924", "Norma de listado que exige que el equipo sostenga la carga al menos 90 minutos, con prueba funcional mensual y prueba de duración completa anual.", "UL Solutions"),
+            ]),
         ],
     },
     {
@@ -739,10 +817,24 @@ SERVICE_CATEGORIES = [
         "intro": "Equipamos a su empresa o su hogar con los productos que marcan la diferencia en los primeros minutos de una emergencia: botiquines completos, camillas, señalética normativa y sistemas contra incendios.",
         "image": BOTIQUIN_IMG, "image_alt": "Botiquín de primeros auxilios equipado CEPASI", "reverse": False, "bg": "bg-beige",
         "items": [
-            _svc("briefcase-medical", "botiquines-equipados", "Botiquines de primeros auxilios equipados", "Disponibles para 25, 50 y 100 personas, en gabinete de metal, plástico o bolso de tela, según el espacio y las necesidades de su empresa."),
-            _svc("bed", "camillas-de-trauma", "Camillas de trauma para emergencias", "Incluyen inmovilizadores de cuello, arnés y sujeciones, listas para una respuesta rápida ante una lesión."),
-            _svc("signpost", "senaletica-industrial", "Señalética de seguridad industrial", "Rutas de evacuación, zonas de reunión, ubicación de extintores, riesgo eléctrico, prohibición de fumar y botiquines, con la señalización normativa que su empresa necesita."),
-            _svc("droplets", "gabinetes-y-mangueras", "Gabinetes y mangueras para sistemas contra incendios", "Equipamiento completo para sistemas fijos contra incendios en instalaciones industriales y comerciales."),
+            _svc("briefcase-medical", "botiquines-equipados", "Botiquines de primeros auxilios equipados", "Disponibles para 25, 50 y 100 personas, en gabinete de metal, plástico o bolso de tela, según el espacio y las necesidades de su empresa.", [
+                ("ANSI/ISEA Z308.1-2021", "Clasifica los botiquines en Clase A (riesgo general) y Clase B (mayor riesgo, incluye férulas y torniquetes).", "ANSI/ISEA"),
+                ("Reglamento 522-06, Resolución 09-26 (2026)", "Clasifica los botiquines dominicanos en Tipo A, B y C según el nivel de riesgo, y exige un responsable capacitado por cada 50 trabajadores de turno.", "Ministerio de Trabajo, R.D."),
+                ("OSHA 29 CFR 1910.151(b)", "Exige suministros de primeros auxilios adecuados y de fácil acceso, citando a ANSI Z308.1 como referencia de contenido mínimo.", "OSHA, EE. UU."),
+            ]),
+            _svc("bed", "camillas-de-trauma", "Camillas de trauma para emergencias", "Incluyen inmovilizadores de cuello, arnés y sujeciones, listas para una respuesta rápida ante una lesión.", [
+                ("Declaración conjunta NAEMSP/ACS-COT/ACEP (2018)", "Recomienda el uso de collarín cervical junto con camilla para mantener la alineación neutra durante el traslado del paciente.", "NAEMSP"),
+                ("Reglamento 522-06, Resolución 09-26 (2026)", "Incluye camillas y collarines cervicales entre el equipamiento exigido en los puestos de primeros auxilios.", "Ministerio de Trabajo, R.D."),
+            ]),
+            _svc("signpost", "senaletica-industrial", "Señalética de seguridad industrial", "Rutas de evacuación, zonas de reunión, ubicación de extintores, riesgo eléctrico, prohibición de fumar y botiquines, con la señalización normativa que su empresa necesita.", [
+                ("ISO 7010", "Estandariza internacionalmente los símbolos gráficos de seguridad, basados en los colores y formas definidos en ISO 3864.", "ISO"),
+                ("ISO 3864", "Fija el significado de los colores de seguridad: rojo (prohibición/equipo contra incendios), amarillo (advertencia), verde (condición segura/salidas) y azul (acción obligatoria).", "ISO"),
+                ("OSHA 29 CFR 1910.145 / ANSI Z535", "Normas de referencia en EE. UU. para la señalización general del lugar de trabajo.", "OSHA / ANSI"),
+            ]),
+            _svc("droplets", "gabinetes-y-mangueras", "Gabinetes y mangueras para sistemas contra incendios", "Equipamiento completo para sistemas fijos contra incendios en instalaciones industriales y comerciales.", [
+                ("NFPA 14", "Clasifica los sistemas de gabinetes y mangueras en Clase I (uso exclusivo de bomberos), Clase II (uso de ocupantes entrenados) y Clase III (combinada).", "NFPA"),
+                ("NFPA 14", "La manguera preinstalada para uso de ocupantes (Clase II) es típicamente de 1½\" de diámetro y hasta 100 pies de longitud.", "NFPA"),
+            ]),
         ],
     },
 ]
@@ -827,6 +919,25 @@ def servicio_contexto(category):
   </section>"""
 
 
+def servicio_normativa(item):
+    if not item.get("estandares"):
+        return ""
+    rows = "\n".join(f"""        <div class="flex gap-4">
+          <i data-lucide="check-circle-2" class="w-5 h-5 text-brandorange shrink-0 mt-0.5"></i>
+          <p class="text-slate-200 leading-relaxed text-sm"><span class="font-heading font-semibold text-white">{norma}:</span> {dato} <span class="text-slate-400">({fuente})</span></p>
+        </div>""" for norma, dato, fuente in item["estandares"])
+    return f"""  <section class="py-14 md:py-20 bg-navy text-white">
+    <div class="max-w-3xl mx-auto px-4 lg:px-8">
+      <span class="eyebrow eyebrow-dot text-brandorange font-semibold text-xs uppercase tracking-widest">Normativa y estándares de referencia</span>
+      <h2 class="font-heading font-bold text-2xl md:text-3xl mt-3 mb-8">Buenas prácticas reconocidas internacionalmente</h2>
+      <div class="space-y-5">
+{rows}
+      </div>
+      <p class="text-xs text-slate-400 mt-8 leading-relaxed">Referencias informativas de organismos técnicos y normativos externos (NFPA, OSHA, ISO, ANSI, OIT, Ministerio de Trabajo de la República Dominicana, entre otros), investigadas y verificadas para orientar las mejores prácticas del sector. No implican certificación de CEPASI por dichos organismos.</p>
+    </div>
+  </section>"""
+
+
 def servicio_relacionados(category, current_slug):
     others = [it for it in category["items"] if it["slug"] != current_slug]
     if not others:
@@ -851,6 +962,7 @@ def servicio_relacionados(category, current_slug):
 def build_servicio_detalle(category, item):
     hero = servicio_hero(category, item)
     contexto = servicio_contexto(category)
+    normativa = servicio_normativa(item)
     relacionados = servicio_relacionados(category, item["slug"])
     cta = cta_band(
         "¿Le interesa este servicio?",
@@ -858,7 +970,7 @@ def build_servicio_detalle(category, item):
         wa_label="Consultar por WhatsApp",
         wa_link=wa_link_for(f"Hola, quisiera más información sobre el servicio de {item['title']}."),
     )
-    body = "\n".join([hero, contexto, relacionados, cta])
+    body = "\n".join([hero, contexto, normativa, relacionados, cta])
     write(f"servicio-{item['slug']}.html", page(
         f"{item['title']} | CEPASI",
         item["desc"],
