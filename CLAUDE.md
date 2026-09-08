@@ -24,28 +24,31 @@ salvo que el cliente lo pida de forma explícita.
 
 ## Cómo editar el sitio
 
-Las 6 páginas (`index.html`, `nosotros.html`, `servicios.html`,
-`proyectos.html`, `blog.html`, `contacto.html`) comparten header, topbar,
-footer y varios bloques (`section_hero`, `cta_band`, `feature_list_section`,
-`category_block`, tarjetas de ícono, etc.). **No están escritas a mano de
-forma independiente** — las genera `tools/build.py`, que arma cada página a
-partir de esas funciones/plantillas en Python.
+Las 6 páginas principales (`index.html`, `nosotros.html`, `servicios.html`,
+`proyectos.html`, `blog.html`, `contacto.html`), más las **25 páginas de
+detalle de servicio** (`servicio-<slug>.html`) y `formulario-psst.html`,
+comparten header, topbar, footer y varios bloques (`section_hero`,
+`cta_band`, `feature_list_section`, `category_block`, tarjetas de ícono,
+etc.). **Ningún `.html` se edita a mano de forma independiente** — todos
+los genera `tools/build.py`, que arma cada página a partir de esas
+funciones/plantillas en Python.
 
 **Regla de oro:** si el cambio toca algo que aparece en más de una página
 (header, footer, nav, botón de WhatsApp, paleta, tipografía, un patrón de
 sección reutilizado), edítalo en `tools/build.py`, no en los `.html`
-directamente — si no, las 6 páginas se desincronizan. Para cambios que
-solo viven en una página (un párrafo específico de Nosotros, por ejemplo)
+directamente — si no, las páginas se desincronizan. Para cambios que solo
+viven en una página (un párrafo específico de Nosotros, por ejemplo)
 también se edita en `tools/build.py`, dentro de la función `build_*()`
 correspondiente, y luego se regenera:
 
 ```bash
-python3 tools/build.py   # reescribe los 6 .html en la raíz del proyecto
+python3 tools/build.py   # reescribe TODOS los .html + sitemap.xml en la raíz
 ```
 
-El script no tiene dependencias externas (solo `os` de la librería
-estándar) y calcula la ruta de salida solo — corre igual desde cualquier
-directorio.
+El script no tiene dependencias externas (solo `os`/`urllib.parse` de la
+librería estándar) y calcula la ruta de salida solo — corre igual desde
+cualquier directorio. También regenera `sitemap.xml` (incluye las 25
+páginas de servicio automáticamente).
 
 **Excepción — Proyectos y Blog:** esas dos páginas NO se editan en
 `build.py` para agregar contenido real. Sus tarjetas se renderizan en el
@@ -58,18 +61,73 @@ Para agregar un proyecto o artículo real, se edita solo ese archivo
 `build.py`. Los 3 registros actuales en cada uno son placeholders
 explícitamente marcados como ejemplo (con nota visible en la página).
 
+### Servicios y sus páginas de detalle
+
+Los 25 servicios (agrupados en 4 categorías) viven en una sola estructura
+de datos, `SERVICE_CATEGORIES` en `tools/build.py`, construida con el
+helper `_svc(icon, slug, title, desc, estandares=None, extra_cta=None)`.
+De ahí se generan tanto las tarjetas de `servicios.html` como cada
+`servicio-<slug>.html` (`build_servicios_detalle()`) — **nunca dupliques
+un servicio a mano en dos sitios**, todo sale de esa misma lista.
+
+- `estandares`: lista de tuplas `(norma_u_organismo, dato, fuente)` que
+  alimenta la sección "Normativa y estándares de referencia" (fondo
+  `navy`) de cada página de detalle. Estos datos fueron investigados y
+  cotejados contra fuentes reales (NFPA, OSHA, ISO, ANSI/ISEA, AHA/ILCOR,
+  OIT, ONU-GHS, UL, NORDOM/INDOCAL, Reglamento 522-06) — **no inventar ni
+  agregar un dato nuevo sin verificarlo en al menos una fuente confiable**
+  (misma disciplina que `CEPASI_copy_website.md`). Se redactan como
+  referencias externas informativas, nunca como "CEPASI está certificada
+  por X" — la sección lleva un descargo explícito para eso.
+- `extra_cta`: tupla opcional `(label, href)` para un botón extra en el
+  hero de esa página de detalle. Hoy solo lo usa `manual-sst`, que enlaza
+  a `formulario-psst.html`.
+
+### Formulario PSST (`formulario-psst.html`)
+
+Recolecta las informaciones que CEPASI necesita para elaborar el Manual
+de Seguridad y Salud en el Trabajo de un cliente (mismos campos que su
+documento interno "Informaciones para el PSST"). Se construye con los
+helpers `_f_input` / `_f_textarea` / `_f_file` / `_f_group` — agregar o
+quitar un campo es editar la lista correspondiente dentro de
+`build_formulario_psst()` y volver a correr `build.py`; no hace falta
+tocar `main.js` (el JS recorre los campos por `data-group`/`data-label`).
+
+Los campos de archivo (`_f_file`) son recuadros reales de
+arrastrar-y-soltar (logo, organigrama, fichas técnicas, plano en PDF,
+fotos por categoría) con lista de seleccionados, opción de quitar uno a
+uno y un total en MB (`initPsstFileDropzones` / `updatePsstFileTotal` en
+`main.js`).
+
+**Envío — pendiente de conectar backend:** el sitio sigue siendo estático
+(sin servidor propio), así que un adjunto real solo puede viajar si algo
+del lado servidor lo reenvía por correo. La constante
+`PSST_UPLOAD_ENDPOINT` en `tools/build.py` (vacía hoy) está pensada para
+la URL de un Google Apps Script Web App desplegado sobre la propia cuenta
+de Gmail de CEPASI (`cuerpodeevacuacion01@gmail.com`) — gratis, sin
+depender de un tercero, hasta ~50 MB de payload. En cuanto se despliegue
+y se pegue esa URL en la constante (y se corra `build.py`), el formulario
+empieza a enviar los archivos de verdad vía `fetch`/`FormData`
+(`assets/js/main.js`, handler de `#psst-form`). Mientras `PSST_UPLOAD_ENDPOINT`
+esté vacía, el formulario cae de vuelta a `mailto:` (como el resto del
+sitio) y lista los nombres de los archivos elegidos en el cuerpo del
+correo, para que el cliente los adjunte manualmente.
+
 ## Estructura
 
 ```
 index.html, nosotros.html, servicios.html,   ← generados por tools/build.py
 proyectos.html, blog.html, contacto.html
-tools/build.py                                ← generador (fuente de verdad del HTML)
+servicio-<slug>.html (× 25)                   ← generados por build_servicios_detalle()
+formulario-psst.html                          ← generado por build_formulario_psst()
+sitemap.xml                                   ← generado por build_sitemap() (incluye los 25 servicios)
+tools/build.py                                ← generador (fuente de verdad de TODO el HTML)
 assets/css/theme.css                          ← color, degradados, botones, tarjetas, íconos, animaciones
 assets/css/typography.css                     ← fuentes, títulos en mayúsculas, eyebrow, nav activo
 assets/css/responsive.css                     ← ajustes específicos de pantallas pequeñas
 assets/js/nav.js                              ← menú móvil, sombra del header, init de íconos lucide
 assets/js/slider.js                           ← slider del hero de Inicio (autoplay/flechas/puntos)
-assets/js/main.js                             ← formularios, filtro de proyectos, render de datos
+assets/js/main.js                             ← formularios (contacto, PSST), filtro de proyectos, render de datos
 assets/js/proyectos-data.js                   ← contenido editable de Proyectos
 assets/js/blog-data.js                        ← contenido editable de Blog
 assets/img/                                   ← fotos reales optimizadas para web (ver abajo)
@@ -132,6 +190,16 @@ CEPASI_copy_website.md                        ← fuente de verdad de TODO el co
   números inventados.
 - **Facebook pendiente:** el ícono de Facebook enlaza a `#` porque el
   cliente no ha dado la URL (brief, sección 4).
+- **Normativa citada como referencia externa, no como certificación:** la
+  sección "Normativa y estándares de referencia" de cada
+  `servicio-<slug>.html` cita normas reales (NFPA, OSHA, ISO, etc.)
+  investigadas y verificadas, pero deliberadamente NO afirma que CEPASI
+  esté certificada por esos organismos — solo que son buenas prácticas
+  del sector. Mantener ese descargo si se edita esa sección.
+- **Formulario PSST sin envío de adjuntos "de verdad" todavía:** es
+  intencional mientras `PSST_UPLOAD_ENDPOINT` esté vacía (ver arriba) —
+  no es un bug, es el estado esperado hasta desplegar el Google Apps
+  Script.
 
 ## Verificación / testing
 
@@ -154,7 +222,21 @@ navegador de verdad / conectar la extensión Claude in Chrome.
 
 Antes de dar por buena una edición: correr `python3 tools/build.py`,
 revisar que `git diff` solo muestre lo esperado, y tomar al menos una
-captura desktop (1440) + una a 600px de las páginas afectadas.
+captura desktop (1440) + una a 600px de las páginas afectadas. Un cambio
+en un helper compartido (`category_block`, `service_item`, `_svc`,
+`servicio_hero`, etc.) toca potencialmente las 25 `servicio-<slug>.html`
+a la vez — revisa el `git status`/`git diff` completo, no solo la página
+que pensabas cambiar.
+
+## Pendiente técnico
+
+- **Conectar `PSST_UPLOAD_ENDPOINT`:** desplegar el Google Apps Script Web
+  App sobre la cuenta de Gmail de CEPASI (requiere acceso a
+  `cuerpodeevacuacion01@gmail.com` o a otra cuenta de Google del
+  cliente), pegar la URL `.../exec` resultante en esa constante de
+  `tools/build.py` y correr `build.py`. Hasta entonces, `formulario-psst.html`
+  funciona por `mailto:` sin adjuntar los archivos automáticamente (ver
+  sección "Formulario PSST" arriba).
 
 ## Pendientes conocidos (del cliente, no técnicos)
 
