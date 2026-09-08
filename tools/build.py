@@ -31,6 +31,12 @@ PHONE_1_TEL = "8092845807"
 PHONE_2 = "829-546-2313"
 PHONE_2_TEL = "8295462313"
 EMAIL = "cuerpodeevacuacion01@gmail.com"
+# URL del Web App de Google Apps Script que recibe el formulario PSST con
+# adjuntos (formulario-psst.html). Vacío = el formulario aún cae de vuelta
+# al envío por mailto (sin adjuntos reales, solo lista de nombres de
+# archivo). Una vez desplegado el script, pegar aquí la URL "…/exec" y
+# volver a correr build.py — no requiere tocar el HTML ni el JS.
+PSST_UPLOAD_ENDPOINT = ""
 ADDRESS = "C/ 16, Esquina 19, Villa Aura, Santo Domingo Oeste, R.D."
 IG = "https://www.instagram.com/seguridad_y_salud_ocupacional1/"
 FB = "#"
@@ -1106,11 +1112,18 @@ def _f_textarea(name, label, span=2, rows=3, placeholder="", group=""):
         </div>"""
 
 
-def _f_check(name, label):
-    return f"""        <label class="flex items-start gap-3 bg-white rounded-sm border border-slate-200 px-4 py-3 cursor-pointer hover:border-brandorange/50 transition">
-          <input type="checkbox" name="{name}" data-label="{label}" class="mt-1 w-4 h-4 accent-brandred shrink-0">
-          <span class="text-sm text-slate-700">{label}</span>
-        </label>"""
+def _f_file(name, label, multiple=False, accept="", span=1, hint=""):
+    hint_html = f'<p class="text-xs text-slate-400 mt-1">{hint}</p>' if hint else ""
+    return f"""        <div class="sm:col-span-{span}">
+          <label class="block text-sm font-medium text-ink mb-1.5">{label}</label>
+          <label data-file-drop class="flex flex-col items-center justify-center gap-1.5 border-2 border-dashed border-slate-300 rounded-sm px-4 py-6 text-center cursor-pointer hover:border-brandorange transition">
+            <i data-lucide="upload" class="w-5 h-5 text-slate-400"></i>
+            <span class="text-sm text-slate-500">Haga clic o arrastre {"los archivos" if multiple else "el archivo"} aquí</span>
+            <input type="file" name="{name}" data-label="{label}" data-file-input {"multiple" if multiple else ""} accept="{accept}" class="hidden">
+          </label>
+          <div data-file-list class="mt-2 space-y-1.5"></div>
+          {hint_html}
+        </div>"""
 
 
 def _f_group(title, fields_html):
@@ -1194,24 +1207,24 @@ def build_formulario_psst():
         _f_textarea("listado_puestos", "Listado de puestos de trabajo administrativos y operativos"),
     ]))
 
-    checklist_items = [
-        ("chk_logo", "Logo de la empresa"),
-        ("chk_organigrama", "Organigrama de la empresa"),
-        ("chk_ficha_quimicos", "Ficha técnica de los productos químicos"),
-        ("chk_fotos_equipos", "Fotos de los equipos utilizados para el trabajo o servicio"),
-        ("chk_fotos_epp", "Fotos de los equipos de protección personal"),
-        ("chk_fotos_vehiculos", "Fotos de los vehículos"),
-        ("chk_fotos_herramientas", "Fotos de las herramientas"),
-        ("chk_plano", "Plano por piso, en PDF"),
-        ("chk_ubicacion", "Ubicación geográfica de la empresa (puede compartirla por WhatsApp)"),
-    ]
-    checklist_html = "\n".join(_f_check(n, l) for n, l in checklist_items)
-    grupo_adjuntos = f"""      <fieldset data-group="Documentos y fotos a adjuntar en el correo" class="border-t border-slate-100 pt-8 mt-8">
-        <legend class="font-heading font-bold text-lg text-ink mb-2 px-0">Documentos y fotos a adjuntar en el correo</legend>
-        <p class="text-sm text-slate-600 mb-5">Estos elementos no se pueden adjuntar desde este formulario — márquelos para no olvidarlos y adjúntelos directamente al correo que se abrirá al enviar.</p>
-        <div class="grid sm:grid-cols-2 gap-3">
-{checklist_html}
+    archivos_html = "\n".join([
+        _f_file("logo_empresa", "Logo de la empresa", accept="image/*"),
+        _f_file("organigrama", "Organigrama de la empresa", accept="image/*,.pdf"),
+        _f_file("ficha_quimicos", "Ficha técnica de los productos químicos", multiple=True, accept="image/*,.pdf"),
+        _f_file("plano_piso", "Plano por piso, en PDF", accept=".pdf"),
+        _f_file("fotos_equipos", "Fotos de los equipos utilizados para el trabajo o servicio", multiple=True, accept="image/*"),
+        _f_file("fotos_epp", "Fotos de los equipos de protección personal", multiple=True, accept="image/*"),
+        _f_file("fotos_vehiculos", "Fotos de los vehículos", multiple=True, accept="image/*"),
+        _f_file("fotos_herramientas", "Fotos de las herramientas", multiple=True, accept="image/*"),
+        _f_input("ubicacion_geografica", "Ubicación geográfica (enlace de Google Maps)", span=2, placeholder="También puede enviárnosla por WhatsApp"),
+    ])
+    grupo_adjuntos = f"""      <fieldset data-group="Documentos y fotos" class="border-t border-slate-100 pt-8 mt-8">
+        <legend class="font-heading font-bold text-lg text-ink mb-2 px-0">Documentos y fotos</legend>
+        <p class="text-sm text-slate-600 mb-5">Adjunte aquí el logo, el organigrama, las fichas técnicas, el plano y las fotos. Puede seleccionar varios archivos por categoría.</p>
+        <div class="grid sm:grid-cols-2 gap-5">
+{archivos_html}
         </div>
+        <p id="psst-file-total" class="text-xs text-slate-500 mt-5">Total seleccionado: 0 MB</p>
       </fieldset>"""
 
     grupo_notas = _f_group("Observaciones adicionales", _f_textarea("notas", "¿Algo más que debamos saber?", rows=4))
@@ -1228,9 +1241,9 @@ def build_formulario_psst():
 {grupo_notas}
         <div class="mt-10 border-t border-slate-100 pt-8">
           <button type="submit" class="clip-br bg-gradient-brand hover:brightness-105 text-white font-bold uppercase tracking-wide text-sm px-7 py-4 inline-flex items-center gap-2 transition">
-            <i data-lucide="send" class="w-4 h-4"></i> Generar correo con esta información
+            <i data-lucide="send" class="w-4 h-4"></i> Enviar informaciones a CEPASI
           </button>
-          <p class="text-xs text-slate-500 mt-3">Se abrirá su cliente de correo con esta información lista para enviar a {EMAIL}. Recuerde adjuntar el logo, las fotos y el plano antes de enviarlo.</p>
+          <p id="psst-help" class="text-xs text-slate-500 mt-3">Se enviará junto con los archivos adjuntados arriba a {EMAIL}.</p>
           <p id="psst-feedback" class="hidden mt-4 text-sm text-ink bg-beige rounded-sm p-3"></p>
         </div>
       </form>
@@ -1243,6 +1256,7 @@ def build_formulario_psst():
         "Complete este formulario con las informaciones que CEPASI necesita para elaborar el Manual de Seguridad y Salud en el Trabajo (SST) de su empresa.",
         "servicios.html",
         body,
+        page_scripts=f'  <script>window.PSST_UPLOAD_ENDPOINT = "{PSST_UPLOAD_ENDPOINT}";</script>',
     ))
 
 

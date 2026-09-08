@@ -278,47 +278,96 @@
         </div>
         </div>
       </fieldset>
-      <fieldset data-group="Documentos y fotos a adjuntar en el correo" class="border-t border-slate-100 pt-8 mt-8">
-        <legend class="font-heading font-bold text-lg text-ink mb-2 px-0">Documentos y fotos a adjuntar en el correo</legend>
-        <p class="text-sm text-slate-600 mb-5">Estos elementos no se pueden adjuntar desde este formulario — márquelos para no olvidarlos y adjúntelos directamente al correo que se abrirá al enviar.</p>
-        <div class="grid sm:grid-cols-2 gap-3">
-        <label class="flex items-start gap-3 bg-white rounded-sm border border-slate-200 px-4 py-3 cursor-pointer hover:border-brandorange/50 transition">
-          <input type="checkbox" name="chk_logo" data-label="Logo de la empresa" class="mt-1 w-4 h-4 accent-brandred shrink-0">
-          <span class="text-sm text-slate-700">Logo de la empresa</span>
-        </label>
-        <label class="flex items-start gap-3 bg-white rounded-sm border border-slate-200 px-4 py-3 cursor-pointer hover:border-brandorange/50 transition">
-          <input type="checkbox" name="chk_organigrama" data-label="Organigrama de la empresa" class="mt-1 w-4 h-4 accent-brandred shrink-0">
-          <span class="text-sm text-slate-700">Organigrama de la empresa</span>
-        </label>
-        <label class="flex items-start gap-3 bg-white rounded-sm border border-slate-200 px-4 py-3 cursor-pointer hover:border-brandorange/50 transition">
-          <input type="checkbox" name="chk_ficha_quimicos" data-label="Ficha técnica de los productos químicos" class="mt-1 w-4 h-4 accent-brandred shrink-0">
-          <span class="text-sm text-slate-700">Ficha técnica de los productos químicos</span>
-        </label>
-        <label class="flex items-start gap-3 bg-white rounded-sm border border-slate-200 px-4 py-3 cursor-pointer hover:border-brandorange/50 transition">
-          <input type="checkbox" name="chk_fotos_equipos" data-label="Fotos de los equipos utilizados para el trabajo o servicio" class="mt-1 w-4 h-4 accent-brandred shrink-0">
-          <span class="text-sm text-slate-700">Fotos de los equipos utilizados para el trabajo o servicio</span>
-        </label>
-        <label class="flex items-start gap-3 bg-white rounded-sm border border-slate-200 px-4 py-3 cursor-pointer hover:border-brandorange/50 transition">
-          <input type="checkbox" name="chk_fotos_epp" data-label="Fotos de los equipos de protección personal" class="mt-1 w-4 h-4 accent-brandred shrink-0">
-          <span class="text-sm text-slate-700">Fotos de los equipos de protección personal</span>
-        </label>
-        <label class="flex items-start gap-3 bg-white rounded-sm border border-slate-200 px-4 py-3 cursor-pointer hover:border-brandorange/50 transition">
-          <input type="checkbox" name="chk_fotos_vehiculos" data-label="Fotos de los vehículos" class="mt-1 w-4 h-4 accent-brandred shrink-0">
-          <span class="text-sm text-slate-700">Fotos de los vehículos</span>
-        </label>
-        <label class="flex items-start gap-3 bg-white rounded-sm border border-slate-200 px-4 py-3 cursor-pointer hover:border-brandorange/50 transition">
-          <input type="checkbox" name="chk_fotos_herramientas" data-label="Fotos de las herramientas" class="mt-1 w-4 h-4 accent-brandred shrink-0">
-          <span class="text-sm text-slate-700">Fotos de las herramientas</span>
-        </label>
-        <label class="flex items-start gap-3 bg-white rounded-sm border border-slate-200 px-4 py-3 cursor-pointer hover:border-brandorange/50 transition">
-          <input type="checkbox" name="chk_plano" data-label="Plano por piso, en PDF" class="mt-1 w-4 h-4 accent-brandred shrink-0">
-          <span class="text-sm text-slate-700">Plano por piso, en PDF</span>
-        </label>
-        <label class="flex items-start gap-3 bg-white rounded-sm border border-slate-200 px-4 py-3 cursor-pointer hover:border-brandorange/50 transition">
-          <input type="checkbox" name="chk_ubicacion" data-label="Ubicación geográfica de la empresa (puede compartirla por WhatsApp)" class="mt-1 w-4 h-4 accent-brandred shrink-0">
-          <span class="text-sm text-slate-700">Ubicación geográfica de la empresa (puede compartirla por WhatsApp)</span>
-        </label>
+      <fieldset data-group="Documentos y fotos" class="border-t border-slate-100 pt-8 mt-8">
+        <legend class="font-heading font-bold text-lg text-ink mb-2 px-0">Documentos y fotos</legend>
+        <p class="text-sm text-slate-600 mb-5">Adjunte aquí el logo, el organigrama, las fichas técnicas, el plano y las fotos. Puede seleccionar varios archivos por categoría.</p>
+        <div class="grid sm:grid-cols-2 gap-5">
+        <div class="sm:col-span-1">
+          <label class="block text-sm font-medium text-ink mb-1.5">Logo de la empresa</label>
+          <label data-file-drop class="flex flex-col items-center justify-center gap-1.5 border-2 border-dashed border-slate-300 rounded-sm px-4 py-6 text-center cursor-pointer hover:border-brandorange transition">
+            <i data-lucide="upload" class="w-5 h-5 text-slate-400"></i>
+            <span class="text-sm text-slate-500">Haga clic o arrastre el archivo aquí</span>
+            <input type="file" name="logo_empresa" data-label="Logo de la empresa" data-file-input  accept="image/*" class="hidden">
+          </label>
+          <div data-file-list class="mt-2 space-y-1.5"></div>
+          
         </div>
+        <div class="sm:col-span-1">
+          <label class="block text-sm font-medium text-ink mb-1.5">Organigrama de la empresa</label>
+          <label data-file-drop class="flex flex-col items-center justify-center gap-1.5 border-2 border-dashed border-slate-300 rounded-sm px-4 py-6 text-center cursor-pointer hover:border-brandorange transition">
+            <i data-lucide="upload" class="w-5 h-5 text-slate-400"></i>
+            <span class="text-sm text-slate-500">Haga clic o arrastre el archivo aquí</span>
+            <input type="file" name="organigrama" data-label="Organigrama de la empresa" data-file-input  accept="image/*,.pdf" class="hidden">
+          </label>
+          <div data-file-list class="mt-2 space-y-1.5"></div>
+          
+        </div>
+        <div class="sm:col-span-1">
+          <label class="block text-sm font-medium text-ink mb-1.5">Ficha técnica de los productos químicos</label>
+          <label data-file-drop class="flex flex-col items-center justify-center gap-1.5 border-2 border-dashed border-slate-300 rounded-sm px-4 py-6 text-center cursor-pointer hover:border-brandorange transition">
+            <i data-lucide="upload" class="w-5 h-5 text-slate-400"></i>
+            <span class="text-sm text-slate-500">Haga clic o arrastre los archivos aquí</span>
+            <input type="file" name="ficha_quimicos" data-label="Ficha técnica de los productos químicos" data-file-input multiple accept="image/*,.pdf" class="hidden">
+          </label>
+          <div data-file-list class="mt-2 space-y-1.5"></div>
+          
+        </div>
+        <div class="sm:col-span-1">
+          <label class="block text-sm font-medium text-ink mb-1.5">Plano por piso, en PDF</label>
+          <label data-file-drop class="flex flex-col items-center justify-center gap-1.5 border-2 border-dashed border-slate-300 rounded-sm px-4 py-6 text-center cursor-pointer hover:border-brandorange transition">
+            <i data-lucide="upload" class="w-5 h-5 text-slate-400"></i>
+            <span class="text-sm text-slate-500">Haga clic o arrastre el archivo aquí</span>
+            <input type="file" name="plano_piso" data-label="Plano por piso, en PDF" data-file-input  accept=".pdf" class="hidden">
+          </label>
+          <div data-file-list class="mt-2 space-y-1.5"></div>
+          
+        </div>
+        <div class="sm:col-span-1">
+          <label class="block text-sm font-medium text-ink mb-1.5">Fotos de los equipos utilizados para el trabajo o servicio</label>
+          <label data-file-drop class="flex flex-col items-center justify-center gap-1.5 border-2 border-dashed border-slate-300 rounded-sm px-4 py-6 text-center cursor-pointer hover:border-brandorange transition">
+            <i data-lucide="upload" class="w-5 h-5 text-slate-400"></i>
+            <span class="text-sm text-slate-500">Haga clic o arrastre los archivos aquí</span>
+            <input type="file" name="fotos_equipos" data-label="Fotos de los equipos utilizados para el trabajo o servicio" data-file-input multiple accept="image/*" class="hidden">
+          </label>
+          <div data-file-list class="mt-2 space-y-1.5"></div>
+          
+        </div>
+        <div class="sm:col-span-1">
+          <label class="block text-sm font-medium text-ink mb-1.5">Fotos de los equipos de protección personal</label>
+          <label data-file-drop class="flex flex-col items-center justify-center gap-1.5 border-2 border-dashed border-slate-300 rounded-sm px-4 py-6 text-center cursor-pointer hover:border-brandorange transition">
+            <i data-lucide="upload" class="w-5 h-5 text-slate-400"></i>
+            <span class="text-sm text-slate-500">Haga clic o arrastre los archivos aquí</span>
+            <input type="file" name="fotos_epp" data-label="Fotos de los equipos de protección personal" data-file-input multiple accept="image/*" class="hidden">
+          </label>
+          <div data-file-list class="mt-2 space-y-1.5"></div>
+          
+        </div>
+        <div class="sm:col-span-1">
+          <label class="block text-sm font-medium text-ink mb-1.5">Fotos de los vehículos</label>
+          <label data-file-drop class="flex flex-col items-center justify-center gap-1.5 border-2 border-dashed border-slate-300 rounded-sm px-4 py-6 text-center cursor-pointer hover:border-brandorange transition">
+            <i data-lucide="upload" class="w-5 h-5 text-slate-400"></i>
+            <span class="text-sm text-slate-500">Haga clic o arrastre los archivos aquí</span>
+            <input type="file" name="fotos_vehiculos" data-label="Fotos de los vehículos" data-file-input multiple accept="image/*" class="hidden">
+          </label>
+          <div data-file-list class="mt-2 space-y-1.5"></div>
+          
+        </div>
+        <div class="sm:col-span-1">
+          <label class="block text-sm font-medium text-ink mb-1.5">Fotos de las herramientas</label>
+          <label data-file-drop class="flex flex-col items-center justify-center gap-1.5 border-2 border-dashed border-slate-300 rounded-sm px-4 py-6 text-center cursor-pointer hover:border-brandorange transition">
+            <i data-lucide="upload" class="w-5 h-5 text-slate-400"></i>
+            <span class="text-sm text-slate-500">Haga clic o arrastre los archivos aquí</span>
+            <input type="file" name="fotos_herramientas" data-label="Fotos de las herramientas" data-file-input multiple accept="image/*" class="hidden">
+          </label>
+          <div data-file-list class="mt-2 space-y-1.5"></div>
+          
+        </div>
+        <div class="sm:col-span-2">
+          <label class="block text-sm font-medium text-ink mb-1.5">Ubicación geográfica (enlace de Google Maps)</label>
+          <input type="text" name="ubicacion_geografica" data-label="Ubicación geográfica (enlace de Google Maps)" placeholder="También puede enviárnosla por WhatsApp" class="w-full rounded-sm border border-slate-300 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brandorange">
+        </div>
+        </div>
+        <p id="psst-file-total" class="text-xs text-slate-500 mt-5">Total seleccionado: 0 MB</p>
       </fieldset>
       <fieldset data-group="Observaciones adicionales" class="border-t border-slate-100 pt-8 mt-8 first:border-0 first:mt-0 first:pt-0">
         <legend class="font-heading font-bold text-lg text-ink mb-5 px-0">Observaciones adicionales</legend>
@@ -331,9 +380,9 @@
       </fieldset>
         <div class="mt-10 border-t border-slate-100 pt-8">
           <button type="submit" class="clip-br bg-gradient-brand hover:brightness-105 text-white font-bold uppercase tracking-wide text-sm px-7 py-4 inline-flex items-center gap-2 transition">
-            <i data-lucide="send" class="w-4 h-4"></i> Generar correo con esta información
+            <i data-lucide="send" class="w-4 h-4"></i> Enviar informaciones a CEPASI
           </button>
-          <p class="text-xs text-slate-500 mt-3">Se abrirá su cliente de correo con esta información lista para enviar a cuerpodeevacuacion01@gmail.com. Recuerde adjuntar el logo, las fotos y el plano antes de enviarlo.</p>
+          <p id="psst-help" class="text-xs text-slate-500 mt-3">Se enviará junto con los archivos adjuntados arriba a cuerpodeevacuacion01@gmail.com.</p>
           <p id="psst-feedback" class="hidden mt-4 text-sm text-ink bg-beige rounded-sm p-3"></p>
         </div>
       </form>
@@ -380,7 +429,7 @@
      class="wa-pulse fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-lg hover:scale-105 transition">
     <i data-lucide="message-circle" class="w-7 h-7"></i>
   </a>
-
+  <script>window.PSST_UPLOAD_ENDPOINT = "";</script>
   <script src="assets/js/nav.js"></script>
   <script src="assets/js/slider.js"></script>
   <script src="assets/js/main.js"></script>

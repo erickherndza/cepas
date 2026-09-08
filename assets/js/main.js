@@ -59,12 +59,23 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // Formulario de informaciones para el Manual de SST (PSST) -> mailto,
-  // sin backend. Recorre los campos por data-group/data-label en vez de
-  // listarlos uno a uno, para que agregar/quitar un campo en build.py no
-  // requiera tocar este archivo.
+  // Formulario de informaciones para el Manual de SST (PSST). Recorre los
+  // campos por data-group/data-label en vez de listarlos uno a uno, para
+  // que agregar/quitar un campo en build.py no requiera tocar este
+  // archivo. Si window.PSST_UPLOAD_ENDPOINT está configurado (URL de un
+  // Google Apps Script Web App), envía el formulario con los archivos
+  // reales adjuntos; si no, cae de vuelta a mailto (sin adjuntos reales,
+  // solo el nombre de los archivos elegidos, como recordatorio).
   var psstForm = document.getElementById('psst-form');
   if (psstForm) {
+    initPsstFileDropzones(psstForm);
+
+    var psstHelp = document.getElementById('psst-help');
+    var hasUploadEndpoint = !!(window.PSST_UPLOAD_ENDPOINT && window.PSST_UPLOAD_ENDPOINT.trim());
+    if (psstHelp && !hasUploadEndpoint) {
+      psstHelp.innerHTML = 'Se abrirá su cliente de correo con esta información. Los archivos elegidos arriba <strong>no se adjuntan automáticamente todavía</strong> — adjúntelos usted mismo a ese correo antes de enviarlo.';
+    }
+
     psstForm.addEventListener('submit', function (e) {
       e.preventDefault();
 
@@ -75,8 +86,10 @@ document.addEventListener('DOMContentLoaded', function () {
         group.querySelectorAll('[data-label]').forEach(function (field) {
           var label = field.getAttribute('data-label');
           var value;
-          if (field.type === 'checkbox') {
-            value = field.checked ? 'Sí, se adjunta' : 'Pendiente';
+          if (field.type === 'file') {
+            value = field.files && field.files.length
+              ? Array.prototype.map.call(field.files, function (f) { return f.name; }).join(', ')
+              : '— (sin seleccionar)';
           } else {
             value = (field.value || '').toString().trim() || '—';
           }
@@ -87,13 +100,34 @@ document.addEventListener('DOMContentLoaded', function () {
       var nombreEmpresaField = psstForm.querySelector('[name="nombre_empresa"]');
       var nombreEmpresa = nombreEmpresaField ? nombreEmpresaField.value.trim() : '';
       var subject = 'Informaciones PSST' + (nombreEmpresa ? ' — ' + nombreEmpresa : '');
+      var feedback = document.getElementById('psst-feedback');
+
+      if (hasUploadEndpoint) {
+        var formData = new FormData(psstForm);
+        formData.append('_subject', subject);
+        if (feedback) {
+          feedback.innerHTML = 'Enviando información y archivos a CEPASI…';
+          feedback.classList.remove('hidden');
+        }
+        fetch(window.PSST_UPLOAD_ENDPOINT, { method: 'POST', body: formData })
+          .then(function (res) { if (!res.ok) throw new Error('bad response'); return res; })
+          .then(function () {
+            if (feedback) feedback.innerHTML = 'Gracias — recibimos su información y los archivos adjuntos. Nuestro equipo se pondrá en contacto en breve.';
+            psstForm.reset();
+            initPsstFileDropzones(psstForm);
+          })
+          .catch(function () {
+            if (feedback) feedback.innerHTML = 'No se pudo enviar automáticamente. Por favor escríbanos por <a href="https://wa.me/18092845807" target="_blank" rel="noopener" class="underline font-semibold">WhatsApp</a> o al correo cuerpodeevacuacion01@gmail.com.';
+          });
+        return;
+      }
+
       var mailto = 'mailto:cuerpodeevacuacion01@gmail.com' +
         '?subject=' + encodeURIComponent(subject) +
         '&body=' + encodeURIComponent(lines.join('\n').trim());
 
-      var feedback = document.getElementById('psst-feedback');
       if (feedback) {
-        feedback.innerHTML = 'Abriendo su cliente de correo con esta información. Antes de enviarlo, no olvide <strong>adjuntar</strong> el logo, las fotos y el plano en PDF marcados en la lista.';
+        feedback.innerHTML = 'Abriendo su cliente de correo con esta información. Antes de enviarlo, no olvide <strong>adjuntar</strong> los archivos que seleccionó arriba.';
         feedback.classList.remove('hidden');
       }
 
@@ -187,3 +221,92 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 });
+
+// Zonas de arrastrar-y-soltar del formulario PSST (formulario-psst.html):
+// lista de archivos elegidos con opción de quitar uno a uno, arrastrar
+// archivos sobre el recuadro, y un total de tamaño acumulado en MB para
+// que el cliente note si se está acercando al límite de un correo.
+var PSST_SOFT_LIMIT_MB = 20;
+
+function initPsstFileDropzones(form) {
+  form.querySelectorAll('[data-file-input]').forEach(function (input) {
+    var dropLabel = input.closest('[data-file-drop]');
+    var container = input.closest('div');
+    var listEl = container && container.querySelector('[data-file-list]');
+
+    function renderFiles() {
+      if (!listEl) return;
+      listEl.innerHTML = '';
+      Array.prototype.forEach.call(input.files, function (file, idx) {
+        var chip = document.createElement('div');
+        chip.className = 'flex items-center justify-between gap-2 bg-beige rounded-sm px-3 py-1.5 text-xs text-ink';
+        var sizeKb = Math.round(file.size / 1024);
+        var nameSpan = document.createElement('span');
+        nameSpan.className = 'truncate';
+        nameSpan.textContent = file.name + ' (' + sizeKb + ' KB)';
+        var removeBtn = document.createElement('button');
+        removeBtn.type = 'button';
+        removeBtn.className = 'text-slate-400 hover:text-brandred shrink-0 font-bold px-1';
+        removeBtn.setAttribute('aria-label', 'Quitar ' + file.name);
+        removeBtn.textContent = '×';
+        removeBtn.addEventListener('click', function () {
+          var dt = new DataTransfer();
+          Array.prototype.forEach.call(input.files, function (f, i) {
+            if (i !== idx) dt.items.add(f);
+          });
+          input.files = dt.files;
+          renderFiles();
+          updatePsstFileTotal(form);
+        });
+        chip.appendChild(nameSpan);
+        chip.appendChild(removeBtn);
+        listEl.appendChild(chip);
+      });
+    }
+
+    input.addEventListener('change', function () {
+      renderFiles();
+      updatePsstFileTotal(form);
+    });
+
+    if (dropLabel) {
+      dropLabel.addEventListener('dragover', function (e) {
+        e.preventDefault();
+        dropLabel.classList.add('border-brandorange');
+      });
+      dropLabel.addEventListener('dragleave', function () {
+        dropLabel.classList.remove('border-brandorange');
+      });
+      dropLabel.addEventListener('drop', function (e) {
+        e.preventDefault();
+        dropLabel.classList.remove('border-brandorange');
+        var incoming = e.dataTransfer.files;
+        if (!incoming || !incoming.length) return;
+        var dt = new DataTransfer();
+        if (input.multiple) {
+          Array.prototype.forEach.call(input.files, function (f) { dt.items.add(f); });
+        }
+        Array.prototype.forEach.call(incoming, function (f) { dt.items.add(f); });
+        input.files = dt.files;
+        renderFiles();
+        updatePsstFileTotal(form);
+      });
+    }
+  });
+  updatePsstFileTotal(form);
+}
+
+function updatePsstFileTotal(form) {
+  var totalEl = document.getElementById('psst-file-total');
+  if (!totalEl) return;
+  var total = 0;
+  form.querySelectorAll('[data-file-input]').forEach(function (input) {
+    Array.prototype.forEach.call(input.files, function (f) { total += f.size; });
+  });
+  var mb = total / (1024 * 1024);
+  var overLimit = mb > PSST_SOFT_LIMIT_MB;
+  totalEl.textContent = 'Total seleccionado: ' + mb.toFixed(1) + ' MB' +
+    (overLimit ? ' — considere enviarlo en más de un correo o compartir las fotos por WhatsApp.' : '');
+  totalEl.classList.toggle('text-brandred', overLimit);
+  totalEl.classList.toggle('font-semibold', overLimit);
+}
