@@ -12,6 +12,7 @@ Uso: python3 tools/build.py   (ejecutar desde la raíz del proyecto, o
 desde cualquier lugar — la ruta de salida se calcula sola)."""
 
 import os
+from urllib.parse import quote
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -263,7 +264,13 @@ def section_hero(eyebrow, headline, subheadline, bg=HERO_IMG, bg_alt=""):
   </section>"""
 
 
-def cta_band(headline, text, wa_label="Contactar por WhatsApp", bg=HERO_IMG):
+def wa_link_for(message):
+    """Enlace de WhatsApp con mensaje prellenado (para CTAs de servicios
+    específicos)."""
+    return f"{WA_LINK}?text={quote(message)}"
+
+
+def cta_band(headline, text, wa_label="Contactar por WhatsApp", bg=HERO_IMG, wa_link=WA_LINK):
     return f"""  <section class="relative overflow-hidden">
     <div class="absolute inset-0">
       <img src="{bg}" alt="" class="w-full h-full object-cover">
@@ -273,7 +280,7 @@ def cta_band(headline, text, wa_label="Contactar por WhatsApp", bg=HERO_IMG):
       <h2 class="font-heading font-bold text-3xl md:text-4xl mb-3">{headline}</h2>
       <p class="text-white/85 max-w-2xl mx-auto mb-9 text-base md:text-lg">{text}</p>
       <div class="flex flex-col sm:flex-row items-center justify-center gap-8">
-        <a href="{WA_LINK}" target="_blank" rel="noopener" class="clip-br bg-gradient-brand hover:brightness-105 text-white font-bold uppercase tracking-wide text-sm px-7 py-4 inline-flex items-center gap-2 transition">
+        <a href="{wa_link}" target="_blank" rel="noopener" class="clip-br bg-gradient-brand hover:brightness-105 text-white font-bold uppercase tracking-wide text-sm px-7 py-4 inline-flex items-center gap-2 transition">
           <i data-lucide="message-circle" class="w-5 h-5"></i> {wa_label}
         </a>
         <a href="tel:+1{PHONE_1_TEL}" class="flex items-center gap-3 group">
@@ -640,18 +647,19 @@ def build_nosotros():
 # SERVICIOS
 # ---------------------------------------------------------------------------
 
-def service_item(icon, title, desc):
-    return f"""        <div class="bg-white rounded-sm border border-slate-100 p-6 card-lift flex gap-4">
+def service_item(icon, slug, title, desc):
+    return f"""        <a href="servicio-{slug}.html" class="bg-white rounded-sm border border-slate-100 p-6 card-lift flex gap-4 group hover:border-brandorange/40 transition">
           {icon_badge(icon, size="w-11 h-11", icon_size="w-5 h-5", soft=True)}
           <div>
             <h4 class="font-heading font-semibold text-ink mb-1.5 leading-snug tracking-normal normal-case">{title}</h4>
             <p class="text-sm text-slate-600 leading-relaxed">{desc}</p>
+            <span class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-brandred mt-3 opacity-0 group-hover:opacity-100 transition">Ver detalles <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></span>
           </div>
-        </div>"""
+        </a>"""
 
 
 def category_block(anchor, number, title, intro, items, image=None, image_alt="", reverse=False, bg=""):
-    items_html = "\n".join(service_item(*it) for it in items)
+    items_html = "\n".join(service_item(it["icon"], it["slug"], it["title"], it["desc"]) for it in items)
     img_col = ""
     text_span = "md:col-span-7" if image else "md:col-span-12"
     if image:
@@ -679,6 +687,67 @@ def category_block(anchor, number, title, intro, items, image=None, image_alt=""
   </section>"""
 
 
+def _svc(icon, slug, title, desc):
+    return {"icon": icon, "slug": slug, "title": title, "desc": desc}
+
+
+SERVICE_CATEGORIES = [
+    {
+        "anchor": "asesoria", "number": "1", "title": "Asesoría y Consultoría Especializada",
+        "intro": "Antes de capacitar o instalar un solo equipo, hay que entender el riesgo. Nuestro equipo de consultoría evalúa su empresa a fondo y traduce esa evaluación en documentos y planes claros, aplicables y alineados con la ley dominicana.",
+        "image": None, "image_alt": "", "reverse": False, "bg": "",
+        "items": [
+            _svc("shield-check", "asesoria-integral-sst", "Asesoría y consultoría integral en Seguridad Industrial y Salud Ocupacional", "Acompañamiento experto para que su empresa identifique sus riesgos, priorice sus inversiones en seguridad y cumpla con sus obligaciones en materia de SST."),
+            _svc("file-text", "manual-sst", "Diseño del Manual de Seguridad y Salud en el Trabajo (SST)", "Elaboramos el manual oficial de su empresa, adaptado a su actividad, sus instalaciones y los riesgos específicos de su operación, en conformidad con el Reglamento 522-06."),
+            _svc("search", "analisis-de-riesgo", "Elaboración de análisis de riesgo corporativos e industriales", "Identificamos los peligros presentes en sus instalaciones —incendios, eléctricos, estructurales, operativos— y entregamos un informe técnico con recomendaciones concretas de mitigación."),
+            _svc("map", "planes-de-emergencia", "Elaboración y estructuración de planes de emergencia para empresas y viviendas", "Diseñamos rutas de evacuación, puntos de encuentro y protocolos de actuación claros, tanto para instalaciones corporativas como para el hogar."),
+        ],
+    },
+    {
+        "anchor": "capacitaciones", "number": "2", "title": "Capacitaciones y Formación Técnica",
+        "intro": "Un plan de emergencia solo funciona si las personas saben ejecutarlo. Formamos a su personal —y, si lo desea, a su familia— para que sepan actuar con calma y eficacia ante cualquier situación de riesgo.",
+        "image": CAPACITACION_IMG, "image_alt": "Capacitación de primeros auxilios y RCP impartida por CEPASI", "reverse": False, "bg": "bg-beige",
+        "items": [
+            _svc("activity", "primeros-auxilios", "Primeros auxilios básicos y avanzados", "Formación práctica para reconocer y atender emergencias médicas mientras llega ayuda especializada."),
+            _svc("siren", "manejo-de-emergencias", "Capacitación integral para el manejo de emergencias en las empresas", "Preparamos a su personal para responder de forma coordinada ante incendios, evacuaciones y otras situaciones críticas."),
+            _svc("house", "prevencion-empresas-hogares", "Organización y prevención de emergencias en empresas y hogares", "Estructuramos protocolos de prevención adaptados tanto al entorno corporativo como al residencial."),
+            _svc("door-open", "simulacros-de-evacuacion", "Ejecución de simulacros de evacuación", "Ponemos a prueba los planes de emergencia en condiciones reales, para corregir a tiempo lo que no funciona."),
+            _svc("users", "comite-mixto-sst", "Formación de Comité Mixto de SST", "Capacitamos a los integrantes del Comité Mixto de Seguridad y Salud en el Trabajo, tal como lo exige el Reglamento 522-06."),
+            _svc("shield", "brigadas-de-emergencia", "Formación y entrenamiento de Brigadas de Emergencia", "Preparamos brigadas internas capaces de liderar la evacuación, el combate inicial de incendios y la atención de primeros auxilios dentro de su empresa."),
+            _svc("zap", "uso-de-dea", "Capacitación en uso de Desfibriladores Externos Automáticos (DEA)", "Entrenamiento en el manejo correcto del DEA para actuar en los primeros minutos —los más críticos— de una emergencia cardíaca."),
+            _svc("truck", "manejo-de-montacargas", "Operación y manejo seguro de montacargas", "Certificación práctica para operadores, reduciendo accidentes en zonas de carga y almacén."),
+            _svc("plug-zap", "seguridad-electrica-industrial", "Seguridad eléctrica e industrial", "Formación en prevención de riesgos eléctricos e industriales para personal técnico y operativo."),
+            _svc("flask-conical", "manejo-de-msds", "Manejo básico de Hojas de Datos de Seguridad de Materiales (MSDS) y materiales peligrosos", "Capacitación para interpretar correctamente las hojas MSDS y manipular sustancias peligrosas con seguridad."),
+            _svc("cloud-lightning", "riesgos-fenomenos-naturales", "Prevención de riesgos ante fenómenos naturales (huracanes y terremotos)", "Protocolos de preparación y respuesta ante eventos naturales frecuentes en la región."),
+            _svc("flame", "prevencion-control-incendios", "Prevención y control de incendios", "Formación teórico-práctica en el uso de extintores y en la actuación temprana ante un conato de incendio."),
+        ],
+    },
+    {
+        "anchor": "mantenimiento", "number": "3", "title": "Mantenimiento, Taller y Equipamiento",
+        "intro": "Un extintor vencido o un detector de humo sin batería son fallas invisibles hasta el momento en que más se necesitan. Nuestro taller especializado se encarga de que sus sistemas contra incendios estén siempre operativos.",
+        "image": HERO_IMG, "image_alt": "Técnico de CEPASI dando mantenimiento a un extintor en taller", "reverse": True, "bg": "",
+        "items": [
+            _svc("wrench", "recarga-mantenimiento-extintores", "Recargas y mantenimiento preventivo/correctivo de extintores", "Inspección, recarga y reparación de extintores para garantizar que funcionen cuando se les necesite."),
+            _svc("truck", "taller-recarga-a-domicilio", "Taller especializado de recarga a domicilio", "Vamos hasta su empresa o su hogar a recargar y dar mantenimiento a sus extintores, sin que tenga que trasladarlos."),
+            _svc("flame-kindling", "venta-de-extintores", "Venta de extintores (ABC, CO2, Halotron, tipo K y sistemas automáticos)", "Le asesoramos sobre el tipo de extintor correcto según el riesgo de cada área de su instalación."),
+            _svc("radio-tower", "deteccion-de-incendios", "Instalación de sistemas de detección de incendios y detectores de humo", "Diseño e instalación de sistemas de detección temprana adaptados a sus instalaciones."),
+            _svc("lightbulb", "lamparas-de-emergencia", "Suministro e instalación de lámparas de emergencia", "Iluminación de emergencia para garantizar rutas de evacuación visibles ante un corte eléctrico."),
+        ],
+    },
+    {
+        "anchor": "equipos", "number": "4", "title": "Equipos de Emergencia y Primeros Auxilios",
+        "intro": "Equipamos a su empresa o su hogar con los productos que marcan la diferencia en los primeros minutos de una emergencia: botiquines completos, camillas, señalética normativa y sistemas contra incendios.",
+        "image": BOTIQUIN_IMG, "image_alt": "Botiquín de primeros auxilios equipado CEPASI", "reverse": False, "bg": "bg-beige",
+        "items": [
+            _svc("briefcase-medical", "botiquines-equipados", "Botiquines de primeros auxilios equipados", "Disponibles para 25, 50 y 100 personas, en gabinete de metal, plástico o bolso de tela, según el espacio y las necesidades de su empresa."),
+            _svc("bed", "camillas-de-trauma", "Camillas de trauma para emergencias", "Incluyen inmovilizadores de cuello, arnés y sujeciones, listas para una respuesta rápida ante una lesión."),
+            _svc("signpost", "senaletica-industrial", "Señalética de seguridad industrial", "Rutas de evacuación, zonas de reunión, ubicación de extintores, riesgo eléctrico, prohibición de fumar y botiquines, con la señalización normativa que su empresa necesita."),
+            _svc("droplets", "gabinetes-y-mangueras", "Gabinetes y mangueras para sistemas contra incendios", "Equipamiento completo para sistemas fijos contra incendios en instalaciones industriales y comerciales."),
+        ],
+    },
+]
+
+
 def build_servicios():
     hero = section_hero(
         "Servicios",
@@ -695,67 +764,13 @@ def build_servicios():
     </div>
   </div>"""
 
-    asesoria = category_block(
-        "asesoria", "1", "Asesoría y Consultoría Especializada",
-        "Antes de capacitar o instalar un solo equipo, hay que entender el riesgo. Nuestro equipo de consultoría evalúa su empresa a fondo y traduce esa evaluación en documentos y planes claros, aplicables y alineados con la ley dominicana.",
-        [
-            ("shield-check", "Asesoría y consultoría integral en Seguridad Industrial y Salud Ocupacional", "Acompañamiento experto para que su empresa identifique sus riesgos, priorice sus inversiones en seguridad y cumpla con sus obligaciones en materia de SST."),
-            ("file-text", "Diseño del Manual de Seguridad y Salud en el Trabajo (SST)", "Elaboramos el manual oficial de su empresa, adaptado a su actividad, sus instalaciones y los riesgos específicos de su operación, en conformidad con el Reglamento 522-06."),
-            ("search", "Elaboración de análisis de riesgo corporativos e industriales", "Identificamos los peligros presentes en sus instalaciones —incendios, eléctricos, estructurales, operativos— y entregamos un informe técnico con recomendaciones concretas de mitigación."),
-            ("map", "Elaboración y estructuración de planes de emergencia para empresas y viviendas", "Diseñamos rutas de evacuación, puntos de encuentro y protocolos de actuación claros, tanto para instalaciones corporativas como para el hogar."),
-        ],
-    )
-
-    capacitaciones = category_block(
-        "capacitaciones", "2", "Capacitaciones y Formación Técnica",
-        "Un plan de emergencia solo funciona si las personas saben ejecutarlo. Formamos a su personal —y, si lo desea, a su familia— para que sepan actuar con calma y eficacia ante cualquier situación de riesgo.",
-        [
-            ("activity", "Primeros auxilios básicos y avanzados", "Formación práctica para reconocer y atender emergencias médicas mientras llega ayuda especializada."),
-            ("siren", "Capacitación integral para el manejo de emergencias en las empresas", "Preparamos a su personal para responder de forma coordinada ante incendios, evacuaciones y otras situaciones críticas."),
-            ("house", "Organización y prevención de emergencias en empresas y hogares", "Estructuramos protocolos de prevención adaptados tanto al entorno corporativo como al residencial."),
-            ("door-open", "Ejecución de simulacros de evacuación", "Ponemos a prueba los planes de emergencia en condiciones reales, para corregir a tiempo lo que no funciona."),
-            ("users", "Formación de Comité Mixto de SST", "Capacitamos a los integrantes del Comité Mixto de Seguridad y Salud en el Trabajo, tal como lo exige el Reglamento 522-06."),
-            ("shield", "Formación y entrenamiento de Brigadas de Emergencia", "Preparamos brigadas internas capaces de liderar la evacuación, el combate inicial de incendios y la atención de primeros auxilios dentro de su empresa."),
-            ("zap", "Capacitación en uso de Desfibriladores Externos Automáticos (DEA)", "Entrenamiento en el manejo correcto del DEA para actuar en los primeros minutos —los más críticos— de una emergencia cardíaca."),
-            ("truck", "Operación y manejo seguro de montacargas", "Certificación práctica para operadores, reduciendo accidentes en zonas de carga y almacén."),
-            ("plug-zap", "Seguridad eléctrica e industrial", "Formación en prevención de riesgos eléctricos e industriales para personal técnico y operativo."),
-            ("flask-conical", "Manejo básico de Hojas de Datos de Seguridad de Materiales (MSDS) y materiales peligrosos", "Capacitación para interpretar correctamente las hojas MSDS y manipular sustancias peligrosas con seguridad."),
-            ("cloud-lightning", "Prevención de riesgos ante fenómenos naturales (huracanes y terremotos)", "Protocolos de preparación y respuesta ante eventos naturales frecuentes en la región."),
-            ("flame", "Prevención y control de incendios", "Formación teórico-práctica en el uso de extintores y en la actuación temprana ante un conato de incendio."),
-        ],
-        image=CAPACITACION_IMG,
-        image_alt="Capacitación de primeros auxilios y RCP impartida por CEPASI",
-        bg="bg-beige",
-    )
-
-    mantenimiento = category_block(
-        "mantenimiento", "3", "Mantenimiento, Taller y Equipamiento",
-        "Un extintor vencido o un detector de humo sin batería son fallas invisibles hasta el momento en que más se necesitan. Nuestro taller especializado se encarga de que sus sistemas contra incendios estén siempre operativos.",
-        [
-            ("wrench", "Recargas y mantenimiento preventivo/correctivo de extintores", "Inspección, recarga y reparación de extintores para garantizar que funcionen cuando se les necesite."),
-            ("truck", "Taller especializado de recarga a domicilio", "Vamos hasta su empresa o su hogar a recargar y dar mantenimiento a sus extintores, sin que tenga que trasladarlos."),
-            ("flame-kindling", "Venta de extintores (ABC, CO2, Halotron, tipo K y sistemas automáticos)", "Le asesoramos sobre el tipo de extintor correcto según el riesgo de cada área de su instalación."),
-            ("radio-tower", "Instalación de sistemas de detección de incendios y detectores de humo", "Diseño e instalación de sistemas de detección temprana adaptados a sus instalaciones."),
-            ("lightbulb", "Suministro e instalación de lámparas de emergencia", "Iluminación de emergencia para garantizar rutas de evacuación visibles ante un corte eléctrico."),
-        ],
-        image=HERO_IMG,
-        image_alt="Técnico de CEPASI dando mantenimiento a un extintor en taller",
-        reverse=True,
-    )
-
-    equipos = category_block(
-        "equipos", "4", "Equipos de Emergencia y Primeros Auxilios",
-        "Equipamos a su empresa o su hogar con los productos que marcan la diferencia en los primeros minutos de una emergencia: botiquines completos, camillas, señalética normativa y sistemas contra incendios.",
-        [
-            ("briefcase-medical", "Botiquines de primeros auxilios equipados", "Disponibles para 25, 50 y 100 personas, en gabinete de metal, plástico o bolso de tela, según el espacio y las necesidades de su empresa."),
-            ("bed", "Camillas de trauma para emergencias", "Incluyen inmovilizadores de cuello, arnés y sujeciones, listas para una respuesta rápida ante una lesión."),
-            ("signpost", "Señalética de seguridad industrial", "Rutas de evacuación, zonas de reunión, ubicación de extintores, riesgo eléctrico, prohibición de fumar y botiquines, con la señalización normativa que su empresa necesita."),
-            ("droplets", "Gabinetes y mangueras para sistemas contra incendios", "Equipamiento completo para sistemas fijos contra incendios en instalaciones industriales y comerciales."),
-        ],
-        image=BOTIQUIN_IMG,
-        image_alt="Botiquín de primeros auxilios equipado CEPASI",
-        bg="bg-beige",
-    )
+    category_sections = [
+        category_block(
+            cat["anchor"], cat["number"], cat["title"], cat["intro"], cat["items"],
+            image=cat["image"], image_alt=cat["image_alt"], reverse=cat["reverse"], bg=cat["bg"],
+        )
+        for cat in SERVICE_CATEGORIES
+    ]
 
     cta = cta_band(
         "¿No sabe qué necesita su empresa?",
@@ -763,13 +778,99 @@ def build_servicios():
         wa_label="Solicitar evaluación gratuita",
     )
 
-    body = "\n".join([hero, quicknav, asesoria, capacitaciones, mantenimiento, equipos, cta])
+    body = "\n".join([hero, quicknav] + category_sections + [cta])
     write("servicios.html", page(
         "Servicios | CEPASI — Asesoría, Capacitación, Mantenimiento y Equipos",
         "Conozca los servicios de CEPASI: asesoría y consultoría SST, capacitaciones, mantenimiento de extintores y venta de equipos de emergencia y primeros auxilios.",
         "servicios.html",
         body,
     ))
+
+
+# ---------------------------------------------------------------------------
+# SERVICIO (detalle individual — una página por cada uno de los 25 servicios)
+# ---------------------------------------------------------------------------
+
+def servicio_hero(category, item):
+    crumbs = f"""      <nav class="text-xs text-slate-300 flex items-center gap-2 justify-center mb-6 flex-wrap">
+        <a href="index.html" class="hover:text-brandorange transition">Inicio</a>
+        <i data-lucide="chevron-right" class="w-3 h-3"></i>
+        <a href="servicios.html" class="hover:text-brandorange transition">Servicios</a>
+        <i data-lucide="chevron-right" class="w-3 h-3"></i>
+        <a href="servicios.html#{category['anchor']}" class="hover:text-brandorange transition">{category['title']}</a>
+        <i data-lucide="chevron-right" class="w-3 h-3"></i>
+        <span class="text-white">{item['title']}</span>
+      </nav>"""
+    bg = category["image"] or HERO_IMG
+    return f"""  <section class="relative overflow-hidden">
+    <div class="absolute inset-0">
+      <img src="{bg}" alt="" class="w-full h-full object-cover">
+      <div class="absolute inset-0 bg-ink/90"></div>
+    </div>
+    <div class="relative max-w-4xl mx-auto px-4 lg:px-8 py-16 md:py-20 text-center">
+{crumbs}
+      {icon_badge(item['icon'], size="w-16 h-16 mx-auto", icon_size="w-7 h-7")}
+      <span class="eyebrow eyebrow-dot text-brandorange font-semibold text-xs uppercase tracking-widest mt-5 inline-block">{category['title']}</span>
+      <h1 class="font-heading font-extrabold text-3xl md:text-5xl text-white mt-3 mb-5 leading-[1.1]">{item['title']}</h1>
+      <p class="text-slate-200 max-w-2xl mx-auto text-base md:text-lg leading-relaxed">{item['desc']}</p>
+    </div>
+  </section>"""
+
+
+def servicio_contexto(category):
+    return f"""  <section class="py-14 md:py-20">
+    <div class="max-w-3xl mx-auto px-4 lg:px-8 text-center">
+      <span class="eyebrow eyebrow-dot text-brandred font-semibold text-xs uppercase tracking-widest">Sobre esta categoría</span>
+      <h2 class="font-heading font-bold text-2xl md:text-3xl text-ink mt-3 mb-5">{category['title']}</h2>
+      <p class="text-slate-600 leading-relaxed">{category['intro']}</p>
+    </div>
+  </section>"""
+
+
+def servicio_relacionados(category, current_slug):
+    others = [it for it in category["items"] if it["slug"] != current_slug]
+    if not others:
+        return ""
+    cards = "\n".join(service_item(it["icon"], it["slug"], it["title"], it["desc"]) for it in others)
+    return f"""  <section class="py-14 md:py-20 bg-beige">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-10">
+        <span class="eyebrow eyebrow-dot text-brandred font-semibold text-xs uppercase tracking-widest">También en {category['title']}</span>
+        <h2 class="font-heading font-bold text-2xl md:text-3xl text-ink mt-3">Otros servicios de esta categoría</h2>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+{cards}
+      </div>
+      <div class="text-center mt-10">
+        <a href="servicios.html#{category['anchor']}" class="inline-flex items-center gap-2 text-ink font-bold uppercase tracking-wide text-sm hover:text-brandred transition">Ver todos los servicios <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+      </div>
+    </div>
+  </section>"""
+
+
+def build_servicio_detalle(category, item):
+    hero = servicio_hero(category, item)
+    contexto = servicio_contexto(category)
+    relacionados = servicio_relacionados(category, item["slug"])
+    cta = cta_band(
+        "¿Le interesa este servicio?",
+        "Cuéntenos sobre su empresa y nuestro equipo técnico le explicará cómo aplicarlo a su caso, sin compromiso.",
+        wa_label="Consultar por WhatsApp",
+        wa_link=wa_link_for(f"Hola, quisiera más información sobre el servicio de {item['title']}."),
+    )
+    body = "\n".join([hero, contexto, relacionados, cta])
+    write(f"servicio-{item['slug']}.html", page(
+        f"{item['title']} | CEPASI",
+        item["desc"],
+        "servicios.html",
+        body,
+    ))
+
+
+def build_servicios_detalle():
+    for category in SERVICE_CATEGORIES:
+        for item in category["items"]:
+            build_servicio_detalle(category, item)
 
 
 # ---------------------------------------------------------------------------
@@ -976,12 +1077,39 @@ def build_contacto():
     ))
 
 
+def build_sitemap():
+    urls = [
+        ("index.html", "1.0"),
+        ("nosotros.html", "0.8"),
+        ("servicios.html", "0.9"),
+        ("proyectos.html", "0.6"),
+        ("blog.html", "0.6"),
+        ("contacto.html", "0.8"),
+    ]
+    for category in SERVICE_CATEGORIES:
+        for item in category["items"]:
+            urls.append((f"servicio-{item['slug']}.html", "0.5"))
+
+    entries = "\n".join(
+        f'  <url><loc>https://www.cepasird.com/{path}</loc><priority>{priority}</priority></url>'
+        for path, priority in urls
+    )
+    content = f"""<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{entries}
+</urlset>
+"""
+    write("sitemap.xml", content)
+
+
 if __name__ == "__main__":
     os.makedirs(ROOT, exist_ok=True)
     build_index()
     build_nosotros()
     build_servicios()
+    build_servicios_detalle()
     build_proyectos()
     build_blog()
     build_contacto()
+    build_sitemap()
     print("DONE")
