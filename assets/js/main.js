@@ -59,6 +59,48 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
+  // Formulario de informaciones para el Manual de SST (PSST) -> mailto,
+  // sin backend. Recorre los campos por data-group/data-label en vez de
+  // listarlos uno a uno, para que agregar/quitar un campo en build.py no
+  // requiera tocar este archivo.
+  var psstForm = document.getElementById('psst-form');
+  if (psstForm) {
+    psstForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      var lines = [];
+      psstForm.querySelectorAll('[data-group]').forEach(function (group) {
+        lines.push('');
+        lines.push('== ' + group.getAttribute('data-group') + ' ==');
+        group.querySelectorAll('[data-label]').forEach(function (field) {
+          var label = field.getAttribute('data-label');
+          var value;
+          if (field.type === 'checkbox') {
+            value = field.checked ? 'Sí, se adjunta' : 'Pendiente';
+          } else {
+            value = (field.value || '').toString().trim() || '—';
+          }
+          lines.push(label + ': ' + value);
+        });
+      });
+
+      var nombreEmpresaField = psstForm.querySelector('[name="nombre_empresa"]');
+      var nombreEmpresa = nombreEmpresaField ? nombreEmpresaField.value.trim() : '';
+      var subject = 'Informaciones PSST' + (nombreEmpresa ? ' — ' + nombreEmpresa : '');
+      var mailto = 'mailto:cuerpodeevacuacion01@gmail.com' +
+        '?subject=' + encodeURIComponent(subject) +
+        '&body=' + encodeURIComponent(lines.join('\n').trim());
+
+      var feedback = document.getElementById('psst-feedback');
+      if (feedback) {
+        feedback.innerHTML = 'Abriendo su cliente de correo con esta información. Antes de enviarlo, no olvide <strong>adjuntar</strong> el logo, las fotos y el plano en PDF marcados en la lista.';
+        feedback.classList.remove('hidden');
+      }
+
+      window.location.href = mailto;
+    });
+  }
+
   // Blog newsletter (sin backend funcional)
   var newsletter = document.getElementById('newsletter-form');
   if (newsletter) {

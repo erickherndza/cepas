@@ -687,8 +687,8 @@ def category_block(anchor, number, title, intro, items, image=None, image_alt=""
   </section>"""
 
 
-def _svc(icon, slug, title, desc, estandares=None):
-    return {"icon": icon, "slug": slug, "title": title, "desc": desc, "estandares": estandares or []}
+def _svc(icon, slug, title, desc, estandares=None, extra_cta=None):
+    return {"icon": icon, "slug": slug, "title": title, "desc": desc, "estandares": estandares or [], "extra_cta": extra_cta}
 
 
 # Cada entrada de "estandares" es (norma_u_organismo, dato_verificado, fuente).
@@ -711,7 +711,7 @@ SERVICE_CATEGORIES = [
                 ("Reglamento 522-06, Resolución 04-2007", "Define 20 elementos básicos obligatorios de todo programa de SST: análisis de accidentes, entrenamiento, preparación para emergencias, entre otros.", "Ministerio de Trabajo, R.D."),
                 ("Reglamento 522-06, Art. 8.2", "Cualquier cambio de maquinaria, productos o métodos de trabajo obliga a actualizar el programa y solicitar una nueva evaluación de riesgos.", "Ministerio de Trabajo, R.D."),
                 ("ISO 45001:2018", "Exige mantener información documentada de la política, los objetivos y los procedimientos del sistema de gestión de SST.", "ISO"),
-            ]),
+            ], extra_cta=("Completar formulario de informaciones para su Manual de SST", "formulario-psst.html")),
             _svc("search", "analisis-de-riesgo", "Elaboración de análisis de riesgo corporativos e industriales", "Identificamos los peligros presentes en sus instalaciones —incendios, eléctricos, estructurales, operativos— y entregamos un informe técnico con recomendaciones concretas de mitigación.", [
                 ("ISO 31000:2018", "Norma internacional que estructura la gestión de riesgos en identificación, análisis, evaluación y tratamiento del riesgo.", "ISO"),
                 ("Reglamento 522-06, Art. 7", "Obliga al empleador a evitar los riesgos en su origen, controlar los que no se puedan evitar y sustituir lo riesgoso por alternativas de menor riesgo.", "Ministerio de Trabajo, R.D."),
@@ -894,6 +894,13 @@ def servicio_hero(category, item):
         <span class="text-white">{item['title']}</span>
       </nav>"""
     bg = category["image"] or HERO_IMG
+    extra_cta_html = ""
+    if item.get("extra_cta"):
+        cta_label, cta_href = item["extra_cta"]
+        extra_cta_html = f"""
+      <a href="{cta_href}" class="clip-br bg-gradient-brand hover:brightness-105 text-white font-bold uppercase tracking-wide text-sm px-7 py-4 inline-flex items-center gap-2 transition mt-8">
+        <i data-lucide="clipboard-list" class="w-5 h-5"></i> {cta_label}
+      </a>"""
     return f"""  <section class="relative overflow-hidden">
     <div class="absolute inset-0">
       <img src="{bg}" alt="" class="w-full h-full object-cover">
@@ -904,7 +911,7 @@ def servicio_hero(category, item):
       {icon_badge(item['icon'], size="w-16 h-16 mx-auto", icon_size="w-7 h-7")}
       <span class="eyebrow eyebrow-dot text-brandorange font-semibold text-xs uppercase tracking-widest mt-5 inline-block">{category['title']}</span>
       <h1 class="font-heading font-extrabold text-3xl md:text-5xl text-white mt-3 mb-5 leading-[1.1]">{item['title']}</h1>
-      <p class="text-slate-200 max-w-2xl mx-auto text-base md:text-lg leading-relaxed">{item['desc']}</p>
+      <p class="text-slate-200 max-w-2xl mx-auto text-base md:text-lg leading-relaxed">{item['desc']}</p>{extra_cta_html}
     </div>
   </section>"""
 
@@ -1080,6 +1087,166 @@ def build_blog():
 
 
 # ---------------------------------------------------------------------------
+# FORMULARIO PSST (informaciones para el Programa/Manual de Seguridad y
+# Salud en el Trabajo — mismos campos que el documento interno que el
+# cliente usa hoy para recopilar esta información por correo).
+# ---------------------------------------------------------------------------
+
+def _f_input(name, label, kind="text", span=1, placeholder="", group=""):
+    return f"""        <div class="sm:col-span-{span}">
+          <label class="block text-sm font-medium text-ink mb-1.5">{label}</label>
+          <input type="{kind}" name="{name}" data-label="{label}" placeholder="{placeholder}" class="w-full rounded-sm border border-slate-300 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brandorange">
+        </div>"""
+
+
+def _f_textarea(name, label, span=2, rows=3, placeholder="", group=""):
+    return f"""        <div class="sm:col-span-{span}">
+          <label class="block text-sm font-medium text-ink mb-1.5">{label}</label>
+          <textarea name="{name}" data-label="{label}" rows="{rows}" placeholder="{placeholder}" class="w-full rounded-sm border border-slate-300 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brandorange"></textarea>
+        </div>"""
+
+
+def _f_check(name, label):
+    return f"""        <label class="flex items-start gap-3 bg-white rounded-sm border border-slate-200 px-4 py-3 cursor-pointer hover:border-brandorange/50 transition">
+          <input type="checkbox" name="{name}" data-label="{label}" class="mt-1 w-4 h-4 accent-brandred shrink-0">
+          <span class="text-sm text-slate-700">{label}</span>
+        </label>"""
+
+
+def _f_group(title, fields_html):
+    return f"""      <fieldset data-group="{title}" class="border-t border-slate-100 pt-8 mt-8 first:border-0 first:mt-0 first:pt-0">
+        <legend class="font-heading font-bold text-lg text-ink mb-5 px-0">{title}</legend>
+        <div class="grid sm:grid-cols-2 gap-5">
+{fields_html}
+        </div>
+      </fieldset>"""
+
+
+def build_formulario_psst():
+    hero = section_hero(
+        "Programa de Seguridad y Salud en el Trabajo",
+        "Formulario de informaciones para su Manual de SST",
+        "Complete estos datos para que nuestro equipo pueda elaborar el Manual de Seguridad y Salud en el Trabajo de su empresa, en conformidad con el Reglamento 522-06. Al final, el formulario generará un correo con toda esta información lista para enviarnos.",
+    )
+
+    identidad = f"""  <section class="bg-beige">
+    <div class="max-w-4xl mx-auto px-4 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-10 text-center sm:text-left">
+      <div class="flex items-center gap-3">
+        {icon_badge("map-pin", size="w-11 h-11", icon_size="w-5 h-5", soft=True)}
+        <div>
+          <p class="text-xs uppercase tracking-wide text-slate-500">Estas informaciones serán procesadas por</p>
+          <p class="font-heading font-bold text-ink">CEPASI — {ADDRESS}</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        {icon_badge("phone", size="w-11 h-11", icon_size="w-5 h-5", soft=True)}
+        <div>
+          <p class="text-xs uppercase tracking-wide text-slate-500">Teléfono / WhatsApp</p>
+          <p class="font-heading font-bold text-ink">{PHONE_1} · {PHONE_2}</p>
+        </div>
+      </div>
+    </div>
+  </section>"""
+
+    grupo_general = _f_group("Datos generales de la empresa", "\n".join([
+        _f_input("nombre_empresa", "Nombre de la empresa"),
+        _f_input("razon_social", "Razón social de la empresa"),
+        _f_input("rnc", "RNC"),
+        _f_input("rnl", "RNL"),
+        _f_input("actividad_economica", "Actividad económica de la empresa"),
+        _f_input("fecha_fundacion", "Fecha de fundación de la empresa", placeholder="dd/mm/aaaa"),
+        _f_input("direccion_empresa", "Dirección de la empresa", span=2),
+        _f_input("telefono_empresa", "Teléfono", kind="tel"),
+        _f_input("correo_empresa", "Dirección de correo electrónico", kind="email"),
+        _f_input("horario_operativo", "Horario de trabajo operativo"),
+        _f_input("horario_administrativo", "Horario de trabajo administrativo"),
+    ]))
+
+    grupo_personal = _f_group("Personal de la empresa", "\n".join([
+        _f_input("cantidad_empleados", "Cantidad de empleados de la empresa", kind="number"),
+        _f_input("empleados_masculino", "Cantidad de empleados — masculino", kind="number"),
+        _f_input("empleados_femenino", "Cantidad de empleados — femenino", kind="number"),
+        _f_input("admin_masculino", "Personal administrativo — masculino", kind="number"),
+        _f_input("admin_femenino", "Personal administrativo — femenino", kind="number"),
+        _f_input("operativo_masculino", "Personal operativo — masculino", kind="number"),
+        _f_input("operativo_femenino", "Personal operativo — femenino", kind="number"),
+    ]))
+
+    grupo_responsables = _f_group("Responsables y representantes (nombre y cédula)", "\n".join([
+        _f_input("gerente_general", "Gerente General"),
+        _f_input("coordinador_sst", "Coordinador de Seguridad y Salud en el Trabajo"),
+        _f_input("representante_propietario", "Representante o propietario de la empresa"),
+        _f_input("aplicador_comite", "Aplicador que formará parte del Comité de SST"),
+        _f_input("encargado_programa", "Encargado del programa de SST (nombre, apellido y cédula)", span=2),
+    ]))
+
+    grupo_empresa = _f_group("Sobre la empresa", "\n".join([
+        _f_textarea("descripcion_empresa", "Descripción o reseña de la empresa"),
+        _f_textarea("mision_vision_valores", "Misión, visión y valores"),
+    ]))
+
+    grupo_inventario = _f_group("Inventario y equipamiento", "\n".join([
+        _f_textarea("listado_vehiculos", "Listado de vehículos (marca, modelo, año y cantidad)"),
+        _f_textarea("listado_herramientas", "Listado de herramientas de trabajo (marca, modelo y cantidad)"),
+        _f_textarea("listado_epp", "Listado de equipos de protección personal (marca y modelo)"),
+        _f_textarea("productos_quimicos", "Nombre de los productos químicos que utilizan"),
+        _f_textarea("listado_maquinas", "Listado de máquinas y equipos —marca y modelo— (si aplica)"),
+        _f_textarea("listado_puestos", "Listado de puestos de trabajo administrativos y operativos"),
+    ]))
+
+    checklist_items = [
+        ("chk_logo", "Logo de la empresa"),
+        ("chk_organigrama", "Organigrama de la empresa"),
+        ("chk_ficha_quimicos", "Ficha técnica de los productos químicos"),
+        ("chk_fotos_equipos", "Fotos de los equipos utilizados para el trabajo o servicio"),
+        ("chk_fotos_epp", "Fotos de los equipos de protección personal"),
+        ("chk_fotos_vehiculos", "Fotos de los vehículos"),
+        ("chk_fotos_herramientas", "Fotos de las herramientas"),
+        ("chk_plano", "Plano por piso, en PDF"),
+        ("chk_ubicacion", "Ubicación geográfica de la empresa (puede compartirla por WhatsApp)"),
+    ]
+    checklist_html = "\n".join(_f_check(n, l) for n, l in checklist_items)
+    grupo_adjuntos = f"""      <fieldset data-group="Documentos y fotos a adjuntar en el correo" class="border-t border-slate-100 pt-8 mt-8">
+        <legend class="font-heading font-bold text-lg text-ink mb-2 px-0">Documentos y fotos a adjuntar en el correo</legend>
+        <p class="text-sm text-slate-600 mb-5">Estos elementos no se pueden adjuntar desde este formulario — márquelos para no olvidarlos y adjúntelos directamente al correo que se abrirá al enviar.</p>
+        <div class="grid sm:grid-cols-2 gap-3">
+{checklist_html}
+        </div>
+      </fieldset>"""
+
+    grupo_notas = _f_group("Observaciones adicionales", _f_textarea("notas", "¿Algo más que debamos saber?", rows=4))
+
+    form_section = f"""  <section class="py-16 md:py-24">
+    <div class="max-w-4xl mx-auto px-4 lg:px-8">
+      <form id="psst-form">
+{grupo_general}
+{grupo_personal}
+{grupo_responsables}
+{grupo_empresa}
+{grupo_inventario}
+{grupo_adjuntos}
+{grupo_notas}
+        <div class="mt-10 border-t border-slate-100 pt-8">
+          <button type="submit" class="clip-br bg-gradient-brand hover:brightness-105 text-white font-bold uppercase tracking-wide text-sm px-7 py-4 inline-flex items-center gap-2 transition">
+            <i data-lucide="send" class="w-4 h-4"></i> Generar correo con esta información
+          </button>
+          <p class="text-xs text-slate-500 mt-3">Se abrirá su cliente de correo con esta información lista para enviar a {EMAIL}. Recuerde adjuntar el logo, las fotos y el plano antes de enviarlo.</p>
+          <p id="psst-feedback" class="hidden mt-4 text-sm text-ink bg-beige rounded-sm p-3"></p>
+        </div>
+      </form>
+    </div>
+  </section>"""
+
+    body = "\n".join([hero, identidad, form_section])
+    write("formulario-psst.html", page(
+        "Formulario PSST | CEPASI — Informaciones para su Manual de SST",
+        "Complete este formulario con las informaciones que CEPASI necesita para elaborar el Manual de Seguridad y Salud en el Trabajo (SST) de su empresa.",
+        "servicios.html",
+        body,
+    ))
+
+
+# ---------------------------------------------------------------------------
 # CONTACTO
 # ---------------------------------------------------------------------------
 
@@ -1197,6 +1364,7 @@ def build_sitemap():
         ("proyectos.html", "0.6"),
         ("blog.html", "0.6"),
         ("contacto.html", "0.8"),
+        ("formulario-psst.html", "0.4"),
     ]
     for category in SERVICE_CATEGORIES:
         for item in category["items"]:
@@ -1222,6 +1390,7 @@ if __name__ == "__main__":
     build_servicios_detalle()
     build_proyectos()
     build_blog()
+    build_formulario_psst()
     build_contacto()
     build_sitemap()
     print("DONE")
