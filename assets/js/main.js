@@ -71,6 +71,7 @@ document.addEventListener('DOMContentLoaded', function () {
     initPsstFileDropzones(psstForm);
 
     var psstHelp = document.getElementById('psst-help');
+    var psstEmail = (window.PSST_EMAIL && window.PSST_EMAIL.trim()) || 'cuerpodeevacuacion01@gmail.com';
     var hasUploadEndpoint = !!(window.PSST_UPLOAD_ENDPOINT && window.PSST_UPLOAD_ENDPOINT.trim());
     if (psstHelp && !hasUploadEndpoint) {
       psstHelp.innerHTML = 'Se abrirá su cliente de correo con esta información. Los archivos elegidos arriba <strong>no se adjuntan automáticamente todavía</strong> — adjúntelos usted mismo a ese correo antes de enviarlo.';
@@ -117,12 +118,12 @@ document.addEventListener('DOMContentLoaded', function () {
             initPsstFileDropzones(psstForm);
           })
           .catch(function () {
-            if (feedback) feedback.innerHTML = 'No se pudo enviar automáticamente. Por favor escríbanos por <a href="https://wa.me/18092845807" target="_blank" rel="noopener" class="underline font-semibold">WhatsApp</a> o al correo cuerpodeevacuacion01@gmail.com.';
+            if (feedback) feedback.innerHTML = 'No se pudo enviar automáticamente. Por favor escríbanos por <a href="https://wa.me/18092845807" target="_blank" rel="noopener" class="underline font-semibold">WhatsApp</a> o al correo ' + psstEmail + '.';
           });
         return;
       }
 
-      var mailto = 'mailto:cuerpodeevacuacion01@gmail.com' +
+      var mailto = 'mailto:' + psstEmail +
         '?subject=' + encodeURIComponent(subject) +
         '&body=' + encodeURIComponent(lines.join('\n').trim());
 

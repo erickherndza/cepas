@@ -38,6 +38,9 @@ PHONE_1_TEL = "8092845807"
 PHONE_2 = "829-546-2313"
 PHONE_2_TEL = "8295462313"
 EMAIL = "cuerpodeevacuacion01@gmail.com"
+# Correo que recibe las informaciones del formulario PSST
+# (formulario-psst.html) — distinto del correo general del sitio (EMAIL).
+PSST_EMAIL = "cepasifire@gmail.com"
 # URL del Web App de Google Apps Script que recibe el formulario PSST con
 # adjuntos (formulario-psst.html). Vacío = el formulario aún cae de vuelta
 # al envío por mailto (sin adjuntos reales, solo lista de nombres de
@@ -1368,13 +1371,28 @@ def build_servicios():
         for cat in SERVICE_CATEGORIES
     ]
 
+    psst_banner = f"""  <section class="bg-beige py-8 border-b border-slate-200">
+    <div class="max-w-5xl mx-auto px-4 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-5 text-center md:text-left">
+      <div class="flex items-center gap-4">
+        {icon_badge("clipboard-list", size="w-14 h-14", icon_size="w-6 h-6")}
+        <div>
+          <h3 class="font-heading font-bold text-lg text-ink">¿Ya es cliente de CEPASI?</h3>
+          <p class="text-sm text-slate-600 max-w-md">Complete el formulario de informaciones para que elaboremos el Manual de Seguridad y Salud en el Trabajo (PSST) de su empresa.</p>
+        </div>
+      </div>
+      <a href="formulario-psst.html" class="clip-br bg-gradient-brand hover:brightness-105 text-white font-bold uppercase tracking-wide text-sm px-7 py-4 inline-flex items-center gap-2 transition shrink-0">
+        <i data-lucide="clipboard-list" class="w-4 h-4"></i> Ir al formulario PSST
+      </a>
+    </div>
+  </section>"""
+
     cta = cta_band(
         "¿No sabe qué necesita su empresa?",
         "Solicite una evaluación gratuita y nuestro equipo técnico le recomendará exactamente lo que su operación requiere para cumplir y estar preparada.",
         wa_label="Solicitar evaluación gratuita",
     )
 
-    body = "\n".join([hero, quicknav] + category_sections + [cta])
+    body = "\n".join([hero, quicknav, psst_banner] + category_sections + [cta])
     write("servicios.html", page(
         "Servicios | CEPASI — Asesoría, Capacitación, Mantenimiento y Equipos",
         "Conozca los servicios de CEPASI: asesoría y consultoría SST, capacitaciones, mantenimiento de extintores y venta de equipos de emergencia y primeros auxilios.",
@@ -1868,7 +1886,7 @@ def build_formulario_psst():
           <button type="submit" class="clip-br bg-gradient-brand hover:brightness-105 text-white font-bold uppercase tracking-wide text-sm px-7 py-4 inline-flex items-center gap-2 transition">
             <i data-lucide="send" class="w-4 h-4"></i> Enviar informaciones a CEPASI
           </button>
-          <p id="psst-help" class="text-xs text-slate-500 mt-3">Se enviará junto con los archivos adjuntados arriba a {EMAIL}.</p>
+          <p id="psst-help" class="text-xs text-slate-500 mt-3">Se enviará junto con los archivos adjuntados arriba a {PSST_EMAIL}.</p>
           <p id="psst-feedback" class="hidden mt-4 text-sm text-ink bg-beige rounded-sm p-3"></p>
         </div>
       </form>
@@ -1881,7 +1899,7 @@ def build_formulario_psst():
         "Complete este formulario con las informaciones que CEPASI necesita para elaborar el Manual de Seguridad y Salud en el Trabajo (SST) de su empresa.",
         "servicios.html",
         body,
-        page_scripts=f'  <script>window.PSST_UPLOAD_ENDPOINT = "{PSST_UPLOAD_ENDPOINT}";</script>',
+        page_scripts=f'  <script>window.PSST_UPLOAD_ENDPOINT = "{PSST_UPLOAD_ENDPOINT}"; window.PSST_EMAIL = "{PSST_EMAIL}";</script>',
         canonical="formulario-psst.html",
     ))
 
