@@ -1386,19 +1386,186 @@ def build_servicios():
     </div>
   </section>"""
 
+
+    # --- Secciones nuevas de proyecto/nuevo/contenido.md (se suman a las categorías) ---
+    def _wa_btn(msg, label):
+        return f"""<a href="{wa_link_for(msg)}" target="_blank" rel="noopener" class="clip-br bg-gradient-brand hover:brightness-105 text-white font-bold uppercase tracking-wide text-sm px-7 py-4 inline-flex items-center gap-2 transition">
+            <i data-lucide="message-circle" class="w-4 h-4"></i> {label}
+          </a>"""
+
+    def _checks(items):
+        return "\n".join(f"""          <li class="flex gap-3 text-sm text-slate-600"><i data-lucide="check" class="w-4 h-4 text-brandred mt-0.5 shrink-0"></i>{t}</li>""" for t in items)
+
+    def _head(eyebrow, title, text):
+        return f"""      <div class="text-center max-w-3xl mx-auto mb-12">
+        <span class="eyebrow eyebrow-dot text-brandred font-semibold text-xs uppercase tracking-widest">{eyebrow}</span>
+        <h2 class="font-heading font-bold text-3xl md:text-4xl text-ink mt-3 mb-4">{title}</h2>
+        <p class="text-slate-600 leading-relaxed">{text}</p>
+      </div>"""
+
+    def _steps(titulo, pasos):
+        lis = "\n".join(f"""            <li class="flex gap-3"><span class="w-7 h-7 rounded-full bg-gradient-brand text-white font-heading font-bold text-sm flex items-center justify-center shrink-0">{i}</span><span class="text-sm text-slate-600 leading-relaxed"><strong class="text-ink">{t}:</strong> {d}</span></li>""" for i, (t, d) in enumerate(pasos, 1))
+        return f"""          <div class="bg-white border border-slate-100 rounded-sm p-6">
+            <h3 class="font-heading font-bold text-xl text-ink mb-4">{titulo}</h3>
+            <ol class="space-y-3">
+{lis}
+            </ol>
+          </div>"""
+
+    def _photo(f, alt, cap="", h="h-72"):
+        fc = f'<figcaption class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink via-ink/70 to-transparent p-4 pt-10 text-sm text-white leading-snug">{cap}</figcaption>' if cap else ""
+        return f"""<figure class="clip-tr relative overflow-hidden bg-ink {h} group">
+          <img src="assets/img/{f}" alt="{alt}" class="w-full {'h-auto max-h-[720px] mx-auto' if h == 'h-auto' else 'h-full object-cover'}" loading="lazy">
+          {fc}
+        </figure>"""
+
+    preventivo = _steps("Mantenimiento preventivo (inspección y servicio periódico)", [
+        ("Despresurización y verificación", "revisamos manómetro, precinto, cilindro y que no haya corrosión ni daños visibles."),
+        ("Desmontaje seguro", "desmontamos válvula y manguera con las herramientas adecuadas."),
+        ("Acondicionamiento del agente", "revisamos el polvo químico para evitar que se compacte o contenga humedad."),
+        ("Limpieza y lubricación", "limpiamos roscas y válvula, y renovamos los sellos para garantizar un cierre óptimo."),
+    ])
+    correctivo = _steps("Mantenimiento correctivo (reparación, pruebas y recarga)", [
+        ("Despresurización gradual", "liberamos la presión de forma lenta, controlada y con protección."),
+        ("Prueba hidrostática", "verificamos la resistencia del cilindro según su tipo y la norma, con la válvula desmontada y en un área protegida."),
+        ("Recarga y presurización", "pesamos el agente en báscula calibrada, rellenamos el cilindro y lo presurizamos con nitrógeno seco."),
+        ("Sellado e identificación", "colocamos un nuevo precinto de seguridad y una etiqueta con los datos técnicos visibles."),
+    ])
+    taller = f"""  <section id="taller" class="py-16 md:py-24 bg-beige">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8">
+{_head("Mantenimiento y taller", "Recarga y mantenimiento de extintores, en nuestro taller o en su empresa", "Un extintor vencido o sin mantenimiento no responde cuando más se necesita. En CEPASI damos mantenimiento preventivo y correctivo a extintores de todos los tamaños y tipos, incluyendo polvo químico seco (ABC), CO₂ y otros agentes, bajo los criterios de la norma NFPA 10. Retiramos sus equipos, los atendemos en nuestro taller y se los devolvemos identificados y listos para usar; si tiene muchas unidades, también podemos trabajar en sus instalaciones.")}
+      <div class="grid md:grid-cols-2 gap-6 mb-12">
+{preventivo}
+{correctivo}
+      </div>
+      <div class="grid lg:grid-cols-2 gap-10 items-center mb-12">
+        <img src="assets/img/taller-reglas-seguridad.jpg" alt="Infografía de CEPASI con las reglas de seguridad en el taller de extintores: equipo de protección, alta presión, área segura y operación de equipos" class="clip-tr w-full h-auto" loading="lazy">
+        <div>
+          <h3 class="font-heading font-bold text-2xl text-ink mb-4">Así trabajamos en el taller</h3>
+          <ul class="space-y-3">
+{_checks(["Personal con equipo de protección: mascarilla, gafas, guantes y botas de seguridad.", "Cilindros de alta presión asegurados con cadenas.", "Área ventilada y con conexión a tierra.", "Manómetros calibrados y pruebas hidrostáticas protegidas."])}
+          </ul>
+          <h3 class="font-heading font-bold text-lg text-ink mt-8 mb-3">Servicios del taller</h3>
+          <ul class="space-y-3">
+{_checks(["Recarga de extintores", "Mantenimiento preventivo y correctivo", "Prueba hidrostática", "Retiro y entrega a domicilio", "Etiquetado e identificación de cada equipo"])}
+          </ul>
+        </div>
+      </div>
+      <div class="grid sm:grid-cols-2 gap-6 mb-12">
+        {_photo("extintores-recogida.jpg", "Extintores de distintos tamaños en un carrito, con precintos amarillos", "Extintores retirados para recarga y mantenimiento")}
+        {_photo("extintores-lote-mantenimiento.jpg", "Lote de extintores rojos y azules con tarjetas de inspección en un estacionamiento", "Mantenimiento de extintores por lote, con control individual")}
+      </div>
+      <div class="text-center">
+        <p class="font-heading font-bold text-xl text-ink mb-2">¿Cuándo fue la última vez que revisó sus extintores?</p>
+        <p class="text-slate-600 text-sm mb-6">Solicite una inspección y le indicamos qué equipos necesitan servicio.</p>
+        {_wa_btn("Hola, quisiera solicitar asesoría sobre el mantenimiento de mis extintores.", "Solicitar asesoría por WhatsApp")}
+      </div>
+    </div>
+  </section>"""
+
+    capacitacion = f"""  <section id="capacitacion-practica" class="py-16 md:py-24">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
+      <div>
+        <span class="eyebrow eyebrow-dot text-brandred font-semibold text-xs uppercase tracking-widest">Capacitaciones y formación técnica</span>
+        <h2 class="font-heading font-bold text-3xl md:text-4xl text-ink mt-3 mb-4">Capacitación práctica en primeros auxilios, RCP y uso del DEA</h2>
+        <p class="text-slate-600 leading-relaxed mb-4">Su equipo debe saber qué hacer en los primeros minutos de una emergencia. Nuestras capacitaciones combinan teoría breve con práctica real: maniquíes de resucitación, equipos DEA de entrenamiento y ejercicios en grupo.</p>
+        <p class="text-slate-600 leading-relaxed mb-6">Formamos al personal de empresas, colegios, comercios y organizaciones para que puedan actuar con seguridad ante un accidente, un paro cardíaco o un incendio.</p>
+        <h3 class="font-heading font-bold text-lg text-ink mb-3">Qué incluye</h3>
+        <ul class="space-y-3 mb-6">
+{_checks(["Primeros auxilios básicos", "RCP (reanimación cardiopulmonar) con práctica en maniquíes", "Uso del desfibrilador externo automático (DEA)", "Uso correcto de extintores", "Brigadas de emergencia", "Simulacros de evacuación", "Apoyo para la conformación del Comité Mixto de SST"])}
+        </ul>
+        <p class="text-slate-600 text-sm leading-relaxed mb-6"><strong class="text-ink">Por qué practicar importa:</strong> quien ha practicado reacciona mejor. Cada participante pasa por los ejercicios con sus propias manos, no solo escucha la explicación.</p>
+        <p class="font-heading font-bold text-xl text-ink mb-4">Capacite a su equipo.</p>
+        {_wa_btn("Hola, quisiera cotizar una capacitación en primeros auxilios y RCP para mi equipo.", "Cotizar capacitación")}
+      </div>
+      {_photo("capacitacion-grupo-maniquies.jpg", "Grupo de participantes en una capacitación de primeros auxilios con maniquíes y DEA de práctica", "Capacitación en primeros auxilios y RCP con práctica en maniquíes", h="h-[560px] md:h-[640px]")}
+    </div>
+  </section>"""
+
+    equipos = f"""  <section id="equipos-emergencia" class="py-16 md:py-24 bg-beige">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8">
+{_head("Equipos de emergencia y primeros auxilios", "Equipos de emergencia, instalados y listos para usar", "Suministramos e instalamos lo que su empresa necesita para responder a una emergencia: extintores, botiquines, camillas, desfibriladores (DEA) y señalética. Cada equipo se coloca en un lugar visible, accesible y con su señal correspondiente, para que cualquier persona lo encuentre rápido.")}
+      <div class="grid md:grid-cols-3 gap-6 mb-10">
+        <div class="bg-white border border-slate-100 rounded-sm p-6">
+          <h3 class="font-heading font-bold text-xl text-ink mb-2">Extintores nuevos</h3>
+          <p class="text-sm text-slate-600 leading-relaxed">Venta de extintores nuevos de distintas capacidades y agentes, con su seguro, precinto y etiqueta de instrucciones. Le ayudamos a elegir el tipo y la cantidad según los riesgos de su local.</p>
+        </div>
+        <div class="bg-white border border-slate-100 rounded-sm p-6">
+          <h3 class="font-heading font-bold text-xl text-ink mb-2">Botiquines</h3>
+          <p class="text-sm text-slate-600 leading-relaxed">Botiquines metálicos con cerradura, instalados con su señal de "Botiquín", y abastecidos para el tipo de actividad de su empresa.</p>
+        </div>
+        <div class="bg-white border border-slate-100 rounded-sm p-6">
+          <h3 class="font-heading font-bold text-xl text-ink mb-2">Camillas de emergencia y DEA</h3>
+          <p class="text-sm text-slate-600 leading-relaxed">Estaciones de emergencia completas: camilla de rescate con sus correas de sujeción, desfibrilador externo automático (DEA/AED) en gabinete y señalización visible.</p>
+        </div>
+      </div>
+      <div class="grid sm:grid-cols-3 gap-6">
+        {_photo("extintores-nuevos.jpg", "Fila de extintores nuevos con seguro, precinto y etiqueta", "Extintores nuevos listos para entrega", h="h-80")}
+        {_photo("botiquin-instalado.jpg", "Botiquín metálico blanco con cerradura y letrero verde de botiquín", "Botiquín instalado y señalizado", h="h-80")}
+        {_photo("estacion-camilla-dea.jpg", "Camilla de emergencia naranja, desfibrilador DEA y extintor con sus señales en una pared", "Estación de emergencia con camilla, DEA y extintor", h="h-80")}
+      </div>
+      <p class="text-center text-sm text-slate-600 mt-8">Gabinetes y soportes también disponibles.</p>
+    </div>
+  </section>"""
+
+    senaletica = f"""  <section id="senaletica-rutas" class="py-16 md:py-24">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
+      {_photo("extintor-senalizado.jpg", "Extintor colgado en la pared con señal de extintor, instrucciones y letrero de ruta de evacuación", "Extintor instalado con su señal e instrucciones de uso", h="h-auto")}
+      <div>
+        <span class="eyebrow eyebrow-dot text-brandred font-semibold text-xs uppercase tracking-widest">Señalética y rutas de evacuación</span>
+        <h2 class="font-heading font-bold text-3xl md:text-4xl text-ink mt-3 mb-4">Señalización que se ve y se entiende</h2>
+        <p class="text-slate-600 leading-relaxed mb-6">Un buen equipo mal señalizado no sirve. Instalamos señalética de seguridad para que las personas encuentren la salida, el extintor y el botiquín sin dudar, aun con prisa o con poca luz.</p>
+        <h3 class="font-heading font-bold text-lg text-ink mb-3">Qué instalamos</h3>
+        <ul class="space-y-3 mb-6">
+{_checks(["Rutas de evacuación (con material fotoluminiscente)", "Ubicación de extintores, con instrucciones de uso", "Botiquín, camilla y DEA", "Señales de prohibición, advertencia y obligación"])}
+        </ul>
+        <p class="font-heading font-bold text-xl text-ink mb-4">¿Su local está señalizado?</p>
+        {_wa_btn("Hola, quisiera solicitar una visita para revisar la señalización de mi local.", "Solicitar visita")}
+      </div>
+    </div>
+  </section>"""
+
+    faqs = [
+        ("¿Cada cuánto debo dar mantenimiento a mis extintores?", "Se recomienda una inspección visual periódica y un mantenimiento anual, además de la recarga después de cada uso y las pruebas hidrostáticas según el tipo de cilindro. Con una revisión le indicamos el estado de cada equipo."),
+        ("¿Pueden retirar los extintores de mi empresa?", "Sí. Los retiramos, les damos servicio en nuestro taller y se los devolvemos identificados. Para lotes grandes también coordinamos el trabajo en sus instalaciones."),
+        ("¿Qué tipos de extintores atienden?", "Polvo químico seco (ABC), CO₂ y otros agentes. Si tiene un equipo especial, consúltenos."),
+        ("¿La capacitación incluye práctica?", "Sí. Usamos maniquíes de RCP y equipos DEA de entrenamiento para que cada participante practique."),
+        ("¿Me ayudan a cumplir el Reglamento 522-06?", "Sí. Le asesoramos en el plan de emergencia, el Comité Mixto de SST, la capacitación y el equipamiento que su empresa necesita."),
+    ]
+    faq_html = "\n".join(f"""        <details class="bg-white border border-slate-100 rounded-sm p-5 group">
+          <summary class="font-heading font-semibold text-ink cursor-pointer list-none flex items-center justify-between gap-4 tracking-normal normal-case">{q}<i data-lucide="plus" class="w-4 h-4 text-brandred shrink-0 group-open:rotate-45 transition"></i></summary>
+          <p class="text-sm text-slate-600 leading-relaxed mt-3">{a}</p>
+        </details>""" for q, a in faqs)
+    faq_ld = json.dumps({
+        "@context": "https://schema.org", "@type": "FAQPage",
+        "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faqs],
+    }, ensure_ascii=False)
+    faq_section = f"""  <section id="preguntas-frecuentes" class="py-16 md:py-24 bg-beige">
+    <div class="max-w-3xl mx-auto px-4 lg:px-8">
+      <div class="text-center mb-10">
+        <span class="eyebrow eyebrow-dot text-brandred font-semibold text-xs uppercase tracking-widest">Preguntas frecuentes</span>
+        <h2 class="font-heading font-bold text-3xl md:text-4xl text-ink mt-3">Lo que más nos preguntan</h2>
+      </div>
+      <div class="space-y-3">
+{faq_html}
+      </div>
+    </div>
+  </section>"""
+
     cta = cta_band(
         "¿No sabe qué necesita su empresa?",
         "Solicite una evaluación gratuita y nuestro equipo técnico le recomendará exactamente lo que su operación requiere para cumplir y estar preparada.",
         wa_label="Solicitar evaluación gratuita",
     )
 
-    body = "\n".join([hero, quicknav, psst_banner] + category_sections + [cta])
+    body = "\n".join([hero, quicknav, psst_banner] + category_sections + [taller, capacitacion, equipos, senaletica, faq_section, cta])
     write("servicios.html", page(
         "Servicios | CEPASI — Asesoría, Capacitación, Mantenimiento y Equipos",
         "Conozca los servicios de CEPASI: asesoría y consultoría SST, capacitaciones, mantenimiento de extintores y venta de equipos de emergencia y primeros auxilios.",
         "servicios.html",
         body,
         canonical="servicios.html",
+        json_ld=f'<script type="application/ld+json">{faq_ld}</script>',
     ))
 
 
